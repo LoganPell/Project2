@@ -7,10 +7,11 @@
   },
   "dependencies": {
     "bcrypt": "^1.0.3",
-    "body-parser": "~1.15.2",
+    "body-parser": "^1.15.2",
     "cookie-parser": "~1.4.3",
     "debug": "~2.2.0",
     "express": "~4.14.0",
+    "express-handlebars": "^3.0.0",
     "express-mysql-session": "^1.2.3",
     "express-session": "^1.15.6",
     "express-validator": "^5.0.1",
@@ -39,5 +40,20 @@
     "style-loader": "^0.13.1",
     "webpack": "^2.7.0",
     "webpack-dotenv-plugin": "^2.0.0"
-  }
+  },
+  "description": "Starter code to create a forum-like website. User login and authentication complete.",
+  "main": "app.js",
+  "directories": {
+    "test": "tests"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LoganPell/Project2.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/LoganPell/Project2/issues"
+  },
+  "homepage": "https://github.com/LoganPell/Project2#readme"
 }

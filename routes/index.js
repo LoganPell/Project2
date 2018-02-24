@@ -1,7 +1,18 @@
 var express = require('express');
+var app = express();
+
+var bodyParser = require('body-parser');
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.text());
+app.use(bodyParser.json({ type: "application/vnd.api+json" }));
 var router = express.Router();
+var hbs = require("express-handlebars");
+app.engine("handlebars", hbs({ defaultLayout: "index" }));
+app.set("view engine", "handlebars");
 //User validation
 var expressValidator = require('express-validator');
+app.use(expressValidator());
 
 //Hashing passwords
 var bcrypt = require('bcrypt');
@@ -9,37 +20,40 @@ const saltRounds = 10;
 
 var passport = require('passport');
 
+app.use(passport.initialize());
+app.use(passport.session());
 /* GET home page. */
-router.get('/', function(req, res) {
-	console.log(req.user);
-	console.log(req.isAuthenticated());
+app.get('/', function(req, res) {
+	// console.log(req.user);
+	// console.log(req.isAuthenticated());
 	res.render('home', { title: 'Home' });
 });
 
-router.get('/profile', authenticationMiddleware(), function(req, res) {
-	res.render('profile', { title: 'Profile'});
+app.get('/profile', function(req, res) {
+	res.render('profile', { title: 'Profile', authenticate: true});
 });
 
-router.get('/login', function(req, res) {
+app.get('/login', function(req, res) {
 	res.render('login', { title: 'Login'});
 });
 
-router.post('/login', passport.authenticate('local', {
+app.post('/login', passport.authenticate('local', {
 	successRedirect: '/profile',
 	failureRedirect: '/login'})
 );
 
-router.get('/logout', function(req, res) {
+app.get('/logout', function(req, res) {
 	req.logout();
 	req.session.destroy();
 	res.redirect('/');
 });
 
-router.get('/register', function(req, res, next) {
+app.get('/register', function(req, res, next) {
   res.render('register', { title: 'Registration' });
 });
 
-router.post('/register', function(req, res, next) {
+app.post('/register', function(req, res, next) {
+	console.log(req.body);
 	req.checkBody('username', 'Username field cannot be empty.').notEmpty();
 	req.checkBody('username', 'Username must be between 4-15 character long.').len(4, 15);
 	req.checkBody('email', 'The email you entered is invalid, please try again.').isEmail();
@@ -92,13 +106,17 @@ passport.deserializeUser(function(user_id, done) {
 	done(null, user_id);
 });	
 
-function authenticationMiddleware () {  
-	return (req, res, next) => {
-		console.log(`req.session.passport.user: ${JSON.stringify(req.session.passport)}`);
+// function authenticationMiddleware () {  
+// 	return (req, res, next) => {
+// 		// console.log(req.session.passport.users ${JSON.stringify(req.session.passport)});
 
-	    if (req.isAuthenticated()) return next();
-	    res.redirect('/login')
-	}
-}
+// 	    if (req.isAuthenticated()) return next();
+// 	    res.redirect('/profile');
+// 	}
+// }
 
 module.exports = router;
+PORT = 3000;
+app.listen(PORT, function() {
+	console.log("app listening on PORT: " + PORT);
+});

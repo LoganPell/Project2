@@ -5,6 +5,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var expressValidator = require('express-validator');
+var exphbs = require('express-handlebars');
 
 // Authentication Packages
 var session = require('express-session');
@@ -13,8 +14,8 @@ var LocalStrategy = require('passport-local').Strategy;
 var MySQLStore = require('express-mysql-session')(session);
 var bcrypt = require('bcrypt');
 
-var index = require('./routes/index');
-var users = require('./routes/users');
+var index = require('./routes/index.js');
+var users = require('./routes/users.js');
 
 var app = express();
 
