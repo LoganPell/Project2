@@ -8,5 +8,6 @@ CREATE TABLE users(
 	username VARCHAR(15) NOT NULL,
 	email VARCHAR(100) NOT NULL,
 	password VARCHAR(100),
-	UNIQUE(username, email)
+	UNIQUE(username, email),
+	PRIMARY KEY (id)
 );
