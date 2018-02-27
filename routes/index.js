@@ -6,10 +6,13 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.text());
 app.use(bodyParser.json({ type: "application/vnd.api+json" }));
+
 var router = express.Router();
 var hbs = require("express-handlebars");
+
 app.engine("handlebars", hbs({ defaultLayout: "index" }));
 app.set("view engine", "handlebars");
+
 //User validation
 var expressValidator = require('express-validator');
 app.use(expressValidator());
@@ -105,6 +108,56 @@ passport.serializeUser(function(user_id, done) {
 passport.deserializeUser(function(user_id, done) {
 	done(null, user_id);
 });	
+
+// ---------------------------------------------------------------------------------------------------
+// -------------------------------------------------------------------------------------------------
+
+
+//Our Models
+var db = require("../models/author.js");
+
+module.exports = function(app) {
+  // Find all Authors and return them to the user with res.json
+  app.get("/authors", function(req, res) {
+    db.Author.findAll({}).then(function(dbAuthor) {
+      res.json(dbAuthor);
+    });
+  });
+
+  app.get("/authors/:id", function(req, res) {
+     // Find one Author with the id in req.params.id and return them to the user with res.json
+    db.Author.findOne({
+      where: {
+        id: req.params.id
+      }
+    }).then(function(dbAuthor) {
+      res.json(dbAuthor);
+    });
+  });
+
+  app.post("/authors", function(req, res) {
+     // Create an Author with the data available to us in req.body
+    console.log(req.body);
+    db.Author.create(req.body).then(function(dbAuthor) {
+      res.json(dbAuthor);
+    });
+  });
+
+  app.delete("/authors/:id", function(req, res) {
+    // Delete the Author with the id available to us in req.params.id
+    db.Author.destroy({
+      where: {
+        id: req.params.id
+      }
+    }).then(function(dbAuthor) {
+      res.json(dbAuthor);
+    });
+  });
+
+};
+// --------------------------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------------------------
+
 
 // function authenticationMiddleware () {  
 // 	return (req, res, next) => {
