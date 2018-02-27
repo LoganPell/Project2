@@ -7,6 +7,10 @@ body div{
    background: red; 
 }
 /*# sourceMappingURL=style.css.map*/
+body {
+	color: #455a64;
+}
+
 #title {
 	padding-left: 65px; 
 }
@@ -36,6 +40,15 @@ body div{
 
 .mobile-btns{
 	/*font-size: 10px;*/ 
+}
+
+input[type=text]:not(.browser-default):focus:not([readonly]), input[type=password]:not(.browser-default):focus:not([readonly]), input[type=email]:not(.browser-default):focus:not([readonly]){
+	border-bottom: 1px solid #FF5252;
+	box-shadow: 0 1px 0 0 #FF5252;
+}
+
+input[type=text]:not(.browser-default):focus:not([readonly])+label, input[type=password]:not(.browser-default):focus:not([readonly])+label, input[type=email]:not(.browser-default):focus:not([readonly])+label{
+	color: #FF5252;
 }
 
 @media only screen and (max-width : 992px) {

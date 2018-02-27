@@ -1,8 +1,5 @@
 {{> header }}
 
-<div class="container">
-	<h1>{{title}}</h1>
-
 	{{#if errors}}
 		{{#each errors}}
 			<div class="alert alert-danger">
@@ -11,25 +8,40 @@
 		{{/each}}
 	{{/if}}
 
-	<form method="POST" action="/register">
-		<div class="form-group">
-			<label for="username">Username</label>
-			<input type="text" name="username" class="form-control" placeholder="Username">
+	<div class="row">
+    	<div class="col s8 m10 l10 offset-s2 offset-m2 offset-l2">
+      		<h2>Register</h2>
+      		<p>It's free, and we will never send you emails... ever. Pinky swear.</p>
+			<form method="POST" action="/register">
+				<div class="row">
+		        <div class="input-field col s12 m8 l8">
+		          <input type="text" class="validate" placeholder="Username" id="regUserName">
+		          <label for="regUserName">Username</label>
+		        </div>
+		      </div>
+		      <div class="row">
+		        <div class="input-field col s12 m8 l8">
+		          <input type="email" class="validate" placeholder="email@place.com" id="regUserName">
+		          <label for="regUserName">Email</label>
+		        </div>
+		      </div>
+		      <div class="row">
+		        <div class="input-field col s12 m8 l8">
+		          <input id="regPassword" type="password" placeholder="Password" class="validate">
+		          <label for="regPassword">Password</label>
+		        </div>
+		      </div>
+		      <div class="row">
+		        <div class="input-field col s12 m8 l8">
+		          <input id="regPasswordConfirm" type="password" placeholder="Confirm Password" class="validate">
+		          <label for="regPasswordConfirm">Confirm Password</label>
+		        </div>
+		      </div>
+		      <button class="btn waves-effect waves-light red accent-2" type="submit" name="action">Submit
+		        <i class="material-icons right">send</i>
+		      </button>
+			</form>
 		</div>
-		<div class="form-group">
-			<label for="email">Email</label>
-			<input type="email" name="email" class="form-control" placeholder="Email">
-		</div>
-		<div class="form-group">
-			<label for="password">Password</label>
-			<input type="password" name="password" class="form-control" placeholder="Password">
-		</div>
-		<div class="form-group">
-			<label for="passwordMatch">Re-Enter Password</label>
-			<input type="password" name="passwordMatch" class="form-control" placeholder="Re-Enter Password">
-		</div>
-		<button type="submit" class="btn btn-primary">Submit</button>
-	</form>
-</div>
+	</div>
 
 {{> footer-end }}
