@@ -1,6 +1,9 @@
 body {
   margin: 0; 
-  background:red;
 }
 
+
+body div{
+  /* background: red; */
+}
 /*# sourceMappingURL=style.css.map*/

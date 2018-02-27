@@ -14,15 +14,17 @@ var LocalStrategy = require('passport-local').Strategy;
 var MySQLStore = require('express-mysql-session')(session);
 var bcrypt = require('bcrypt');
 
-
-var app = express();
+var port = process.env.PORT || 3000;
+var app = express(); // 
 
 require('dotenv').config();
 app.use(express.static('public'));
 
+
+
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'hbs');
+app.engine('handlebars', exphbs({ defaultLayout: "index"}));
+app.set('view engine', 'handlebars');
 
 
 var index = require('./routes/index.js');
@@ -93,24 +95,24 @@ passport.use(new LocalStrategy(
   }
 ));
 
-// // catch 404 and forward to error handler
-// app.use(function(req, res, next) {
-//   var err = new Error('Not Found');
-//   err.status = 404;
-//   next(err);
-// });
+// catch 404 and forward to error handler
+app.use(function(req, res, next) {
+  var err = new Error('Not Found');
+  err.status = 404;
+  next(err);
+});
 
 
-// // error handler
-// app.use(function(err, req, res, next) {
-//   // set locals, only providing error in development
-//   res.locals.message = err.message;
-//   res.locals.error = req.app.get('env') === 'development' ? err : {};
+// error handler
+app.use(function(err, req, res, next) {
+  // set locals, only providing error in development
+  res.locals.message = err.message;
+  res.locals.error = req.app.get('env') === 'development' ? err : {};
 
-//   // render the error page
-//   res.status(err.status || 500);
-//   res.render('error');
-// });
+  // render the error page
+  res.status(err.status || 500);
+  res.render('error');
+});
 
 
 // Handlebars default config
@@ -136,6 +138,6 @@ hbs.registerHelper('json', function(context) {
 });
 
 
-app.listen(9000, () => {
-  console.log("App is starting at port ", 9000)
+app.listen(port, () => {
+  console.log("App is starting at port ", port)
 });
