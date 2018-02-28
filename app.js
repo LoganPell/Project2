@@ -17,6 +17,7 @@ var index = require('./routes/index');
 var users = require('./routes/users');
 
 var app = express();
+var port = process.env.PORT || 3000;
 
 require('dotenv').config();
 

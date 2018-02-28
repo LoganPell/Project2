@@ -1,0 +1,47 @@
+{{> header }}
+
+	{{#if errors}}
+		{{#each errors}}
+			<div class="alert alert-danger">
+				{{this.msg}}
+			</div>
+		{{/each}}
+	{{/if}}
+
+	<div class="row">
+    	<div class="col s8 m10 l10 offset-s2 offset-m2 offset-l2">
+      		<h2>Register</h2>
+      		<p>It's free, and we will never send you emails... ever. Pinky swear.</p>
+			<form method="POST" action="/register">
+				<div class="row">
+		        <div class="input-field col s12 m8 l8">
+		          <input name="username" type="text" class="validate" placeholder="Username" id="regUserName">
+		          <label for="regUserName">Username</label>
+		        </div>
+		      </div>
+		      <div class="row">
+		        <div class="input-field col s12 m8 l8">
+		          <input name="email" type="email" class="validate" placeholder="email@place.com" id="regUserName">
+		          <label for="regUserName">Email</label>
+		        </div>
+		      </div>
+		      <div class="row">
+		        <div class="input-field col s12 m8 l8">
+		          <input name="password" id="regPassword" type="password" placeholder="Password" class="validate">
+		          <label for="regPassword">Password</label>
+		        </div>
+		      </div>
+		      <div class="row">
+		        <div class="input-field col s12 m8 l8">
+		          <input name="passwordMatch" id="regPasswordConfirm" type="password" placeholder="Confirm Password" class="validate">
+		          <label for="regPasswordConfirm">Confirm Password</label>
+		        </div>
+		      </div>
+		      <button class="btn waves-effect waves-light blue-grey darken-2" type="submit" name="action">Submit
+		        <i class="material-icons right">send</i>
+		      </button>
+			</form>
+		</div>
+	</div>
+
+{{> footer-end }}
