@@ -11,15 +11,3 @@ CREATE TABLE users(
 	UNIQUE(username, email),
 	PRIMARY KEY (id)
 );
-
-CREATE TABLE author(
-	id INT NOT NULL AUTO_INCREMENT,
-	author_name VARCHAR(15) NOT NULL,
-	PRIMARY KEY (id)
-);
-
-CREATE TABLE post(
-	id INT NOT NULL AUTO_INCREMENT,
-	post VARCHAR(15) NOT NULL,
-	PRIMARY KEY (id)
-);
