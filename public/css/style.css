@@ -60,7 +60,7 @@ input[type=text]:not(.browser-default):focus:not([readonly])+label, input[type=p
   }
 }
 
-@media only screen and (max-width : 497px) {
+@media only screen and (max-width : 500px) {
 	.sidenav {
 	width:180px;
 	}
