@@ -23,7 +23,7 @@ var posts = {
     orm.delete("post_table", post, function(res) {
       cb(res);
     });
-  };
+  }
 };
 
 module.exports = function(sequelize, DataTypes) {

@@ -1,7 +1,6 @@
-
 var express = require("express");
 var router = express.Router();
-
+require('dotenv').config();
 
 //Hashing passwords
 var bcrypt = require('bcrypt');
@@ -17,7 +16,7 @@ router.get('/', function(req, res) {
 });
 
 router.get('/profile', function(req, res) {
-	res.render('profile', { title: 'Profile', authenticate: true});
+	res.render('profile', { title: 'Profile', authenticate: true });
 });
 
 router.get('/login', function(req, res) {
@@ -55,10 +54,11 @@ router.post('/register', function(req, res, next) {
 	if (errors) {
 		console.log('errors: ${JSON.stringify(errors)}');
 
-		res.render('register', {
+		res.redirect('/register', {
 			title: 'Registration Error',
 			errors: errors
 		});
+		alert("please try again");
 	} else {
 		const username = req.body.username;
 		const email = req.body.email;
@@ -67,7 +67,7 @@ router.post('/register', function(req, res, next) {
 		const db = require("../db.js");
 
 		bcrypt.hash(password, saltRounds, function(err, hash) {
-			db.query('INSERT INTO users (username, email, password) VALUES(?, ?, ?)', [username, email, hash], function(error, results, fields) {
+			db.query('INSERT INTO users (username, email, password) VALUES (?, ?, ?)', [username, email, hash], function(error, results, fields) {
 				if (error) throw error;
 
 				db.query('SELECT LAST_INSERT_ID() as user_id', function(error, results, fields) {
@@ -98,51 +98,51 @@ passport.deserializeUser(function(user_id, done) {
 
 
 //Our Models
-var db = require("../models/author.js");
+// var db = require("../models/author.js");
 
-// Find all Authors and return them to the user with res.json
-router.get("/authors", function(req, res) {
-	db.Author.findAll({}).then(function(dbAuthor) {
-		res.json(dbAuthor);
-	});
-});
+// // Find all Authors and return them to the user with res.json
+// router.get("/authors", function(req, res) {
+// 	db.Author.findAll({}).then(function(dbAuthor) {
+// 		res.json(dbAuthor);
+// 	});
+// });
 
-router.get("/authors/:id", function(req, res) {
-	 // Find one Author with the id in req.params.id and return them to the user with res.json
-	db.Author.findOne({
-		where: {
-			id: req.params.id
-		}
-	}).then(function(dbAuthor) {
-		res.json(dbAuthor);
-	});
-});
+// router.get("/authors/:id", function(req, res) {
+// 	 // Find one Author with the id in req.params.id and return them to the user with res.json
+// 	db.Author.findOne({
+// 		where: {
+// 			id: req.params.id
+// 		}
+// 	}).then(function(dbAuthor) {
+// 		res.json(dbAuthor);
+// 	});
+// });
 
-router.post("/authors", function(req, res) {
-	 // Create an Author with the data available to us in req.body
-	console.log(req.body);
-	db.Author.create(req.body).then(function(dbAuthor) {
-		res.json(dbAuthor);
-	});
-});
+// router.post("/authors", function(req, res) {
+// 	 // Create an Author with the data available to us in req.body
+// 	console.log(req.body);
+// 	db.Author.create(req.body).then(function(dbAuthor) {
+// 		res.json(dbAuthor);
+// 	});
+// });
 
-router.delete("/authors/:id", function(req, res) {
-	// Delete the Author with the id available to us in req.params.id
-	db.Author.destroy({
-		where: {
-			id: req.params.id
-		}
-	}).then(function(dbAuthor) {
-		res.json(dbAuthor);
-	});
-});
-// --------------------------------------------------------------------------------------------------
-// --------------------------------------------------------------------------------------------------
+// router.delete("/authors/:id", function(req, res) {
+// 	// Delete the Author with the id available to us in req.params.id
+// 	db.Author.destroy({
+// 		where: {
+// 			id: req.params.id
+// 		}
+// 	}).then(function(dbAuthor) {
+// 		res.json(dbAuthor);
+// 	});
+// });
+// // --------------------------------------------------------------------------------------------------
+// // --------------------------------------------------------------------------------------------------
 
 
 // function authenticationMiddleware () {  
 // 	return (req, res, next) => {
-// 		// console.log(req.session.passport.users ${JSON.stringify(req.session.passport)});
+// 		console.log('req.session.passport.users: ${JSON.stringify(req.session.passport)}');
 
 // 	    if (req.isAuthenticated()) return next();
 // 	    res.redirect('/profile');

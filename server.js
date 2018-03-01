@@ -21,7 +21,6 @@ require('dotenv').config();
 app.use(express.static('public'));
 
 
-
 // view engine setup
 app.engine('handlebars', exphbs({ defaultLayout: "index"}));
 app.set('view engine', 'handlebars');
@@ -29,7 +28,6 @@ app.set('view engine', 'handlebars');
 
 var index = require('./routes/index.js');
 var users = require('./routes/users.js');
-var routes = require('./controllers/blogController.js');
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
@@ -45,7 +43,6 @@ var options = {
   user: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME,
-  socketPath: '/Applications/MAMP/tmp/mysql/mysql.sock'
 };
 
 var sessionStore = new MySQLStore(options);
@@ -72,7 +69,7 @@ passport.use(new LocalStrategy(
   function(username, password, done) {
     console.log(username);
     console.log(password);
-    const db = require("./config/connection.js");
+    const db = require('./db.js');
 
     db.query('SELECT id, password FROM users WHERE username = ?', [username], function(err, results, fields) {
       if (err) {done(err)};

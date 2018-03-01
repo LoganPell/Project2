@@ -24,9 +24,9 @@ var Blogger = {
     orm.delete("blogger_table", post, function(res) {
       cb(res);
     });
-  };
-};
+  }
 
+}
 
 module.exports = function(sequelize, DataTypes) {
   var Author = sequelize.define("Author", {
