@@ -1,7 +1,14 @@
+<<<<<<< HEAD
 var express = require('express');
 var router = express.Router();
 //User validation
 var expressValidator = require('express-validator');
+=======
+
+var express = require("express");
+var router = express.Router();
+
+>>>>>>> parent of 91f10d4... schema tables
 
 //Hashing passwords
 var bcrypt = require('bcrypt');
@@ -9,6 +16,7 @@ const saltRounds = 10;
 
 var passport = require('passport');
 
+<<<<<<< HEAD
 /* GET home page. */
 router.get('/', function(req, res) {
 	console.log(req.user);
@@ -18,6 +26,17 @@ router.get('/', function(req, res) {
 
 router.get('/profile', authenticationMiddleware(), function(req, res) {
 	res.render('profile', { title: 'Profile'});
+=======
+
+router.get('/', function(req, res) {
+	// console.log(req.user);
+	// console.log(req.isAuthenticated());
+	res.render('home', { title: 'Home' });
+});
+
+router.get('/profile', function(req, res) {
+	res.render('profile', { title: 'Profile', authenticate: true});
+>>>>>>> parent of 91f10d4... schema tables
 });
 
 router.get('/login', function(req, res) {
@@ -40,6 +59,10 @@ router.get('/register', function(req, res, next) {
 });
 
 router.post('/register', function(req, res, next) {
+<<<<<<< HEAD
+=======
+	console.log(req.body);
+>>>>>>> parent of 91f10d4... schema tables
 	req.checkBody('username', 'Username field cannot be empty.').notEmpty();
 	req.checkBody('username', 'Username must be between 4-15 character long.').len(4, 15);
 	req.checkBody('email', 'The email you entered is invalid, please try again.').isEmail();
@@ -92,9 +115,62 @@ passport.deserializeUser(function(user_id, done) {
 	done(null, user_id);
 });	
 
+<<<<<<< HEAD
 function authenticationMiddleware () {  
 	return (req, res, next) => {
 		console.log(`req.session.passport.user: ${JSON.stringify(req.session.passport)}`);
+=======
+// ---------------------------------------------------------------------------------------------------
+// -------------------------------------------------------------------------------------------------
+
+
+//Our Models
+var db = require("../models/author.js");
+
+// Find all Authors and return them to the user with res.json
+router.get("/authors", function(req, res) {
+	db.Author.findAll({}).then(function(dbAuthor) {
+		res.json(dbAuthor);
+	});
+});
+
+router.get("/authors/:id", function(req, res) {
+	 // Find one Author with the id in req.params.id and return them to the user with res.json
+	db.Author.findOne({
+		where: {
+			id: req.params.id
+		}
+	}).then(function(dbAuthor) {
+		res.json(dbAuthor);
+	});
+});
+
+router.post("/authors", function(req, res) {
+	 // Create an Author with the data available to us in req.body
+	console.log(req.body);
+	db.Author.create(req.body).then(function(dbAuthor) {
+		res.json(dbAuthor);
+	});
+});
+
+router.delete("/authors/:id", function(req, res) {
+	// Delete the Author with the id available to us in req.params.id
+	db.Author.destroy({
+		where: {
+			id: req.params.id
+		}
+	}).then(function(dbAuthor) {
+		res.json(dbAuthor);
+	});
+});
+// --------------------------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------------------------
+
+
+// function authenticationMiddleware () {  
+// 	return (req, res, next) => {
+// 		// console.log(req.session.passport.users ${JSON.stringify(req.session.passport)});
+>>>>>>> parent of 91f10d4... schema tables
 
 	    if (req.isAuthenticated()) return next();
 	    res.redirect('/login')
@@ -102,3 +178,10 @@ function authenticationMiddleware () {
 }
 
 module.exports = router;
+<<<<<<< HEAD
+=======
+// PORT = 3000;
+// app.listen(PORT, function() {
+// 	console.log("app listening on PORT: " + PORT);
+// });
+>>>>>>> parent of 91f10d4... schema tables
