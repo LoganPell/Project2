@@ -1,3 +1,31 @@
+var orm = require('../config/orm.js');
+
+var posts = {
+  all: function(cb){
+    orm.all('post_table', function(res){
+      cb(res);
+    });
+  },
+  // cols and vals are arrays
+  create: function(cols, vals, cb){
+    orm.create('post_table', cols, vals, function(res){
+      cb(res);
+    });
+  },
+  // update posts
+  update: function(objColVals, post, cb){
+    orm.update('post_table', objColVals, post, function(res){
+      cb(res);
+    });
+  },
+  // Delete
+  delete: function(post, cb) {
+    orm.delete("post_table", post, function(res) {
+      cb(res);
+    });
+  };
+};
+
 module.exports = function(sequelize, DataTypes) {
   var Post = sequelize.define("Post", {
     title: {
@@ -26,3 +54,5 @@ module.exports = function(sequelize, DataTypes) {
 
   return Post;
 };
+
+module.exports = posts;

@@ -29,6 +29,7 @@ app.set('view engine', 'handlebars');
 
 var index = require('./routes/index.js');
 var users = require('./routes/users.js');
+var routes = require('./controllers/blogController.js');
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
@@ -71,7 +72,7 @@ passport.use(new LocalStrategy(
   function(username, password, done) {
     console.log(username);
     console.log(password);
-    const db = require('./db');
+    const db = require("./config/connection.js");
 
     db.query('SELECT id, password FROM users WHERE username = ?', [username], function(err, results, fields) {
       if (err) {done(err)};

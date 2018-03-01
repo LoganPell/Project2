@@ -12,14 +12,16 @@ CREATE TABLE users(
 	PRIMARY KEY (id)
 );
 
-CREATE TABLE author(
+CREATE TABLE blogger_table(
 	id INT NOT NULL AUTO_INCREMENT,
 	author_name VARCHAR(15) NOT NULL,
+	posts varchar (200) NOT NULL,	
 	PRIMARY KEY (id)
 );
 
-CREATE TABLE post(
+CREATE TABLE post_table(
 	id INT NOT NULL AUTO_INCREMENT,
-	post VARCHAR(15) NOT NULL,
+	posts varchar (200) NOT NULL,	
+	author_name VARCHAR(15) NOT NULL,
 	PRIMARY KEY (id)
 );
