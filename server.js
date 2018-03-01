@@ -14,16 +14,21 @@ var LocalStrategy = require('passport-local').Strategy;
 var MySQLStore = require('express-mysql-session')(session);
 var bcrypt = require('bcrypt');
 
-var index = require('./routes/index.js');
-var users = require('./routes/users.js');
-
-var app = express();
+var port = process.env.PORT || 3000;
+var app = express(); // 
 
 require('dotenv').config();
+app.use(express.static('public'));
+
+
 
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'hbs');
+app.engine('handlebars', exphbs({ defaultLayout: "index"}));
+app.set('view engine', 'handlebars');
+
+
+var index = require('./routes/index.js');
+var users = require('./routes/users.js');
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
@@ -32,7 +37,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(expressValidator([])); //this line must be immediatle after any of the bodyParser middlewares!
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+
 
 var options = {
   host: process.env.DB_HOST,
@@ -133,4 +138,6 @@ hbs.registerHelper('json', function(context) {
 });
 
 
-module.exports = app;
+app.listen(port, () => {
+  console.log("App is starting at port ", port)
+});

@@ -1,44 +1,115 @@
 <!doctype html>
 <html class="no-js" lang="">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <title>{{ title }}</title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+  <head>
+      <meta charset="utf-8">
+      <meta http-equiv="x-ua-compatible" content="ie=edge">
+      <title>{{ title }}</title>
+      <meta name="description" content="">
+      
 
-        <link rel="apple-touch-icon" href="apple-touch-icon.png">
-        <!-- Place favicon.ico in the root directory -->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    </head>
-    <body>
-        <!--[if lt IE 8]>
-            <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-        <![endif]-->
-        <div class="container">
-            <div class="header clearfix">
-                <nav>
-                  <ul class="nav nav-pills float-right">
-                    <li class="nav-item">
-                      <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
-                    </li>
-                    {{#if authenticate}}
-                    <li class="nav-item">
-                      <a class="nav-link" href="/profile">Profile</a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link" href="/logout">Logout</a>
-                    </li>
-                    {{else}}
-                    <li class="nav-item">
-                      <a class="nav-link" href="/register">Register</a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link" href="/login">Login</a>
-                    </li>
-                    {{/if}}
-                  </ul>
-                </nav>
-                <h3 class="text-muted">Project name</h3>
-            </div>
-        </div>
+      <link rel="apple-touch-icon" href="apple-touch-icon.png">
+      <!-- JQUERY -->
+      <script src="http://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+
+      <!-- MATERIAL ICONS -->
+      <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+      
+      <!-- MATERIALIZE -->
+      <!-- CSS -->
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-alpha.4/css/materialize.min.css">
+      <!-- JAVASCRIPT -->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-alpha.4/js/materialize.min.js"></script>
+
+      <!-- OUR CSS -->
+      <link rel="stylesheet" type="text/css" href="/css/style.css">
+
+      <!-- OUR JAVASCRIPT -->
+      <script type="text/javascript" src="/js/client.js"></script>
+
+      <!-- SCALE SCALE SCALE -->
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+             
+  </head>
+  <body>
+    <div class="navbar-fixed">
+    <nav class="z-depth-0">
+      <div class="nav-wrapper blue-grey darken-2">
+        <a href="/" class="hide-on-med-and-down brand-logo"><img id="our-logo" src="/images/frontPage.svg"></a>
+        <a href="/" id="title" class="brand-logo">Front Page</a>
+        <a data-target="mobile-demo" class="sidenav-trigger left-align"><i class="material-icons">menu</i></a>
+        <ul class="right hide-on-med-and-down">
+          <li>
+            <a href="/"><i class="left material-icons">home</i>Home</a>
+          </li>
+          {{#if authenticate}}
+          <!-- IF LOGGED IN -->
+          <li>
+            <a  class="white-text dropdown-trigger" data-target="favsDrop"><i class="left material-icons">account_box</i>Username</a>
+            <ul id="favsDrop" class='dropdown-content'>
+              <li>
+                <a href="/profile" class="white-text">Profile</a>
+              </li>
+              <li>
+                <a href="#!" class="red-text accent-2">Category A</a>
+              </li>
+              <li>
+                <a href="#!" class="red-text accent-2">Category B</a>
+              </li>
+              <li>
+                <a href="#!" class="red-text accent-2">Category C</a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <a href="/logout" class="white-text">Logout</a>
+          </li>
+          {{else}}
+          <!-- IF NOT LOGGED IN -->
+          <li>
+            <a href="/login"><i class="left material-icons">account_box</i>Login</a>
+          </li>
+          <li>
+            <a href="/register"><i class="left material-icons">create</i>Sign Up</a>
+          </li>
+        </ul>
+        {{/if}}
+      </div>
+    </nav>
+  </div>
+
+  <ul class="sidenav z-depth-0 blue-grey darken-2" id="mobile-demo">
+    <li id="sidenav-logo">
+      <img src="/images/frontPage.svg">
+    </li>
+    <li>
+      <a href="/" class="white-text"><i class="left material-icons white-text">home</i>Home</a>
+    </li>
+    {{#if authenticate}}
+    <!-- IF LOGGED IN -->
+    <li>
+      <a href="/profile" class="white-text"><i class="left material-icons white-text">account_box</i>Username</a>
+    </li>
+    <li>
+      <a href="/logout" class="white-text">Logout</a>
+    </li>
+    <li>
+      <a href="#" class="white-text">Category A</a>
+    </li>
+    <li>
+      <a href="#" class="white-text">Category B</a>
+    </li>
+    <li>
+      <a href="#" class="white-text">Category C</a>
+    </li>
+    {{else}}
+    <!-- IF NOT LOGGED IN -->
+    <li>
+      <a href="/login" class="white-text"><i class="left material-icons white-text">account_box</i>Login</a>
+    </li>
+    <li>
+      <a href="/register" class="white-text"><i class="left material-icons white-text">create</i>Sign Up</a>
+    </li>
+    {{/if}}
+  </ul>
+
