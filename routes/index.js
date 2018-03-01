@@ -1,18 +1,7 @@
-var express = require('express');
-var app = express();
 
-var bodyParser = require('body-parser');
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.text());
-app.use(bodyParser.json({ type: "application/vnd.api+json" }));
+var express = require("express");
 var router = express.Router();
-var hbs = require("express-handlebars");
-app.engine("handlebars", hbs({ defaultLayout: "index" }));
-app.set("view engine", "handlebars");
-//User validation
-var expressValidator = require('express-validator');
-app.use(expressValidator());
+
 
 //Hashing passwords
 var bcrypt = require('bcrypt');
@@ -20,39 +9,37 @@ const saltRounds = 10;
 
 var passport = require('passport');
 
-app.use(passport.initialize());
-app.use(passport.session());
-/* GET home page. */
-app.get('/', function(req, res) {
+
+router.get('/', function(req, res) {
 	// console.log(req.user);
 	// console.log(req.isAuthenticated());
 	res.render('home', { title: 'Home' });
 });
 
-app.get('/profile', function(req, res) {
+router.get('/profile', function(req, res) {
 	res.render('profile', { title: 'Profile', authenticate: true});
 });
 
-app.get('/login', function(req, res) {
+router.get('/login', function(req, res) {
 	res.render('login', { title: 'Login'});
 });
 
-app.post('/login', passport.authenticate('local', {
+router.post('/login', passport.authenticate('local', {
 	successRedirect: '/profile',
 	failureRedirect: '/login'})
 );
 
-app.get('/logout', function(req, res) {
+router.get('/logout', function(req, res) {
 	req.logout();
 	req.session.destroy();
 	res.redirect('/');
 });
 
-app.get('/register', function(req, res, next) {
+router.get('/register', function(req, res, next) {
   res.render('register', { title: 'Registration' });
 });
 
-app.post('/register', function(req, res, next) {
+router.post('/register', function(req, res, next) {
 	console.log(req.body);
 	req.checkBody('username', 'Username field cannot be empty.').notEmpty();
 	req.checkBody('username', 'Username must be between 4-15 character long.').len(4, 15);
@@ -106,6 +93,53 @@ passport.deserializeUser(function(user_id, done) {
 	done(null, user_id);
 });	
 
+// ---------------------------------------------------------------------------------------------------
+// -------------------------------------------------------------------------------------------------
+
+
+//Our Models
+var db = require("../models/author.js");
+
+// Find all Authors and return them to the user with res.json
+router.get("/authors", function(req, res) {
+	db.Author.findAll({}).then(function(dbAuthor) {
+		res.json(dbAuthor);
+	});
+});
+
+router.get("/authors/:id", function(req, res) {
+	 // Find one Author with the id in req.params.id and return them to the user with res.json
+	db.Author.findOne({
+		where: {
+			id: req.params.id
+		}
+	}).then(function(dbAuthor) {
+		res.json(dbAuthor);
+	});
+});
+
+router.post("/authors", function(req, res) {
+	 // Create an Author with the data available to us in req.body
+	console.log(req.body);
+	db.Author.create(req.body).then(function(dbAuthor) {
+		res.json(dbAuthor);
+	});
+});
+
+router.delete("/authors/:id", function(req, res) {
+	// Delete the Author with the id available to us in req.params.id
+	db.Author.destroy({
+		where: {
+			id: req.params.id
+		}
+	}).then(function(dbAuthor) {
+		res.json(dbAuthor);
+	});
+});
+// --------------------------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------------------------
+
+
 // function authenticationMiddleware () {  
 // 	return (req, res, next) => {
 // 		// console.log(req.session.passport.users ${JSON.stringify(req.session.passport)});
@@ -116,7 +150,7 @@ passport.deserializeUser(function(user_id, done) {
 // }
 
 module.exports = router;
-PORT = 3000;
-app.listen(PORT, function() {
-	console.log("app listening on PORT: " + PORT);
-});
+// PORT = 3000;
+// app.listen(PORT, function() {
+// 	console.log("app listening on PORT: " + PORT);
+// });
