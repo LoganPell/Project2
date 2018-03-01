@@ -5,6 +5,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var expressValidator = require('express-validator');
+var exphbs = require('express-handlebars');
 
 // Authentication Packages
 var session = require('express-session');
@@ -13,16 +14,12 @@ var LocalStrategy = require('passport-local').Strategy;
 var MySQLStore = require('express-mysql-session')(session);
 var bcrypt = require('bcrypt');
 
-<<<<<<< HEAD:app.js
+
 var index = require('./routes/index');
 var users = require('./routes/users');
 
 var app = express();
 var port = process.env.PORT || 3000;
-=======
-var port = process.env.PORT || 3000;
-var app = express(); // 
->>>>>>> parent of 91f10d4... schema tables:server.js
 
 require('dotenv').config();
 app.use(express.static('public'));

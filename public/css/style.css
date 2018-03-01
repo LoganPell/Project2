@@ -11,6 +11,7 @@ body {
 	color: #455a64;
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 #title {
 	padding-left: 65px; 
@@ -53,6 +54,8 @@ body {
 }
 
 =======
+=======
+>>>>>>> 01c38610dadf991ec15bb025b043738fb84f1a88
 
 #title {
 	padding-left: 65px; 
@@ -103,21 +106,7 @@ input[type=text]:not(.browser-default):focus:not([readonly])+label, input[type=p
   }
 }
 
->>>>>>> parent of 91f10d4... schema tables
 @media only screen and (max-width : 497px) {
 	.sidenav {
 	width:180px;
 	}
-<<<<<<< HEAD
-}
-
-input[type=text]:not(.browser-default):focus:not([readonly]), input[type=password]:not(.browser-default):focus:not([readonly]), input[type=email]:not(.browser-default):focus:not([readonly]){
-	border-bottom: 1px solid #FF5252;
-	box-shadow: 0 1px 0 0 #FF5252;
-}
-
-input[type=text]:not(.browser-default):focus:not([readonly])+label, input[type=password]:not(.browser-default):focus:not([readonly])+label, input[type=email]:not(.browser-default):focus:not([readonly])+label{
-	color: #FF5252;
-=======
->>>>>>> parent of 91f10d4... schema tables
-}
