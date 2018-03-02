@@ -1,6 +1,6 @@
 var express = require("express");
 var router = express.Router();
-require('dotenv').config();
+var expressValidator = require('express-validator');
 
 //Hashing passwords
 var bcrypt = require('bcrypt');
@@ -54,11 +54,10 @@ router.post('/register', function(req, res, next) {
 	if (errors) {
 		console.log('errors: ${JSON.stringify(errors)}');
 
-		res.redirect('/register', {
+		res.render('register', {
 			title: 'Registration Error',
 			errors: errors
 		});
-		alert("please try again");
 	} else {
 		const username = req.body.username;
 		const email = req.body.email;
