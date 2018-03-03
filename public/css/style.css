@@ -34,13 +34,14 @@ body {
 	width: 75%;
 }
 
-.postcards{
+.postcards, #sortPosts{
 	padding-top: 20px;
 }
 
 .mobile-btns{
 	/*font-size: 10px;*/ 
 }
+
 
 input[type=text]:not(.browser-default):focus:not([readonly]), input[type=password]:not(.browser-default):focus:not([readonly]), input[type=email]:not(.browser-default):focus:not([readonly]){
 	border-bottom: 1px solid #FF5252;
