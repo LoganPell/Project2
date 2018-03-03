@@ -1,27 +1,27 @@
-var orm = require('../config/orm.js');
+var ormBlogger = require('../config/orm.js');
 
 var Blogger = {
   all: function(cb){
-    orm.all('blogger_table', function(res){
+    ormBlogger.all('blogger_table', function(res){
       cb(res);
     });
   },
   // cols and vals are arrays
   create: function (cols, vals, cb){
-    orm.create('blogger_table', cols, vals, function(res){
+    ormBlogger.create('blogger_table', cols, vals, function(res){
       cb(res);
     });
   },
   //update
   update: function (objColVals, post, cb){
-    orm.update('blogger_table', objColVals, post, function(res){
+    ormBlogger.update('blogger_table', objColVals, post, function(res){
       cb(res);
     });
   },
   
   // Delete
   delete: function(post, cb) {
-    orm.delete("blogger_table", post, function(res) {
+    ormBlogger.delete("blogger_table", post, function(res) {
       cb(res);
     });
   }

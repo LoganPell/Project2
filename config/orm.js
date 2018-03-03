@@ -5,8 +5,9 @@ var connection = require('../db.js');
 // Setup CRUD for MySQL
 
 var ormPost = {
+  // View all posts
   all: function(tableInput, cb) {
-    var queryString = "SELECT * FROM " + tableInput + ";";
+    var queryString = "SELECT * FROM posts" + tableInput + ";";
     connection.query(queryString, (err, result) => {
       if (err) {
         throw err;

@@ -8,7 +8,7 @@ CREATE TABLE users(
 	username VARCHAR(15) NOT NULL,
 	email VARCHAR(100) NOT NULL,
 	password BINARY (100),
-	CONSTRAINT UC_user UNIQUE (username, email),
+	CONSTRAINT users_uc UNIQUE (username, email),
 	PRIMARY KEY (userID)
 );
 

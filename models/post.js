@@ -1,26 +1,26 @@
-var orm = require('../config/orm.js');
+var ormPost = require('../config/orm.js');
 
 var posts = {
   all: function(cb){
-    orm.all('post_table', function(res){
+    ormPost.all('posts', function(res){
       cb(res);
     });
   },
   // cols and vals are arrays
   create: function(cols, vals, cb){
-    orm.create('post_table', cols, vals, function(res){
+    ormPost.create('posts', cols, vals, function(res){
       cb(res);
     });
   },
   // update posts
   update: function(objColVals, post, cb){
-    orm.update('post_table', objColVals, post, function(res){
+    ormPost.update('posts', objColVals, post, function(res){
       cb(res);
     });
   },
   // Delete
   delete: function(post, cb) {
-    orm.delete("post_table", post, function(res) {
+    ormPost.delete("posts", post, function(res) {
       cb(res);
     });
   }

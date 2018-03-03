@@ -56,7 +56,7 @@ router.post('/register', function(req, res, next) {
 	const errors = req.validationErrors();
 
 	if (errors) {
-		console.log('errors: ${JSON.stringify(errors)}');
+		console.log('Line 59 errors: ${JSON.stringify(errors)}');
 
 		res.render('register', {
 			title: 'Registration Error',
@@ -71,7 +71,19 @@ router.post('/register', function(req, res, next) {
 
 		bcrypt.hash(password, saltRounds, function(err, hash) {
 			db.query('INSERT INTO users (username, email, password) VALUES (?, ?, ?)', [username, email, hash], function(error, results, fields) {
-				if (error) throw error;
+				if (error) {
+					switch(error.code){
+						case "ER_DUP_ENTRY":
+						res.redirect('/login');
+						break;
+					}
+					return;
+				};
+					
+// gotta figure out duplicate username/email trying to register,
+//redirect to login page
+// App crashes
+//refer to schema line 11
 
 				//access user sessions data
 				db.query('SELECT LAST_INSERT_ID() as user_id', function(error, results, fields) {
