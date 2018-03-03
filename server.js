@@ -14,12 +14,8 @@ var LocalStrategy = require('passport-local').Strategy;
 var MySQLStore = require('express-mysql-session')(session);
 var bcrypt = require('bcrypt');
 
-
-var index = require('./routes/index');
-var users = require('./routes/users');
-
-var app = express();
 var port = process.env.PORT || 3000;
+var app = express(); // 
 
 require('dotenv').config();
 app.use(express.static('public'));
