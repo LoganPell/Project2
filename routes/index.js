@@ -9,17 +9,47 @@ const saltRounds = 10;
 //sessions storage
 var passport = require('passport');
 
-//Home Page
+router.post('/postform', function(req, res) {
+	console.log(req.body);
+	req.checkBody('postTitle').notEmpty();
+	req.checkBody('postForm').notEmpty();
+
+	const errors = req.validationErrors();
+	if (errors) {
+		res.render('postform', 
+			{ title: 'Post Error', 
+			errors: errors
+		});
+	} else {
+		const postTitle = req.body.postTitle;
+		const postBody = req.body.postBody;
+
+		const db = require('../db.js');
+
+		db.query('INSERT INTO posts (postTitle, postBody) VALUES (?, ?)', [postTitle, postBody], function(error, results, fields) {
+			if (error) throw error;
+		});
+	}
+});
+
+router.get('/post/?', function(req,res) {
+	const db = require('../db.js');
+	db.query('SELECT (postTitle, postBody, upvotes, downvotes) FROM posts WHERE postID = ?', [req.params.postID], function(req, res) {
+		res.render('post', { title: 'Post' });
+	});
+	// res.redirect to post
+});
+
 router.get('/', function(req, res) {
 	console.log(req.user);
 	console.log(req.isAuthenticated());
 	res.render('home', { title: 'Home' });
 });
 
-//Profile Page, Authenticate
-router.get('/profile', authenticationMiddleware(), function(req, res) {
+
+router.get('/profile', function(req, res) {
 	res.render('profile', { title: 'Profile', authenticate: true });
-}); 
+});
 
 //Login Page
 router.get('/login', function(req, res) {
@@ -27,8 +57,9 @@ router.get('/login', function(req, res) {
 });
 
 router.post('/login', passport.authenticate('local', {
-	successRedirect: '/profile',
-	failureRedirect: '/login'})
+	successRedirect: '/', authenticate: true,
+	failureRedirect: '/login'
+	})
 );
 
 router.get('/logout', function(req, res) {
@@ -59,7 +90,7 @@ router.post('/register', function(req, res, next) {
 	if (errors) {
 		console.log('Line 59 errors: ${JSON.stringify(errors)}');
 
-		res.render('register', {
+		res.render('/register', {
 			title: 'Registration Error',
 			errors: errors
 		});
@@ -71,18 +102,21 @@ router.post('/register', function(req, res, next) {
 		const db = require("../db.js");
 
 		bcrypt.hash(password, saltRounds, function(err, hash) {
-			db.query('INSERT INTO users (username, email, password) VALUES (?, ?, ?)', [username, email, hash], function(error, results, fields) {
-				if (error) {
-					switch(error.code){
-						case "ER_DUP_ENTRY":
-						res.json({error: "Username is taken"});
 
-						break;
-					}
-					return;
-				};
+			db.query('INSERT INTO users (username, email, password) VALUES (?, ?, ?)', [username, email, hash], function(error, results, fields) {
+				// if (error) {
+				// 	switch(error.code){
+				// 		case "ER_DUP_ENTRY":
+				// 		res.json({error: "Username is taken"});
+
+				// 		break;
+				// 	}
+				// 	return;
+				// };
+				});
 					
 				//access user sessions data
+
 				db.query('SELECT LAST_INSERT_ID() as user_id', function(error, results, fields) {
 					if (error) throw error;
 
@@ -94,7 +128,7 @@ router.post('/register', function(req, res, next) {
 						res.redirect('/');
 					});
 				});
-			});
+			
 		});
 	}
 }); 
@@ -107,18 +141,7 @@ passport.deserializeUser(function(user_id, done) {
 	done(null, user_id);
 });	
 
-// ---------------------------------------------------------------------------------------------------
-// -------------------------------------------------------------------------------------------------
-
-
-//Stores session data only if users logged in
-function authenticationMiddleware () {  
-	return (req, res, next) => {
-		console.log('req.session.passport.users: ${JSON.stringify(req.session.passport)}');
-
-	    if (req.isAuthenticated()) return next();
-	    res.redirect('/profile');
-	}
-}
 
 module.exports = router;
+
+
