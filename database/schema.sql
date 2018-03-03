@@ -7,24 +7,33 @@ CREATE TABLE users(
 	userID INT NOT NULL AUTO_INCREMENT,
 	username VARCHAR(15) NOT NULL,
 	email VARCHAR(100) NOT NULL,
-	password VARCHAR(100),
+	password VARCHAR(60),
 	UNIQUE(username, email),
 	PRIMARY KEY (userID)
 );
 
 CREATE TABLE posts(
 	postID INT NOT NULL AUTO_INCREMENT,
+	userID INT NOT NULL,
 	TIMESTAMP,
+	postTitle VARCHAR(100) NOT NULL,
+	category VARCHAR(100) NOT NULL,
 	post VARCHAR(1000) NOT NULL,
+	upvotes INT NULL,
+	downvotes INT NULL,
 	PRIMARY KEY (postID),
 	FOREIGN KEY (userID) REFERENCES users(userID),
-	FOREIGN KEY (commentID) REFERENCES comments(commentID)
 );
 
 CREATE TABLE comments(
 	commentID INT NOT NULL AUTO_INCREMENT,
+	userID INT NOT NULL,
+	postID INT NOT NULL,
 	TIMESTAMP,
 	comment VARCHAR(1000) NOT NULL,
+	upvotes INT NULL,
+	downvotes INT NULL,
 	PRIMARY KEY (commentID),
-	FOREIGN KEY (userID) REFERENCES users(userID)
+	FOREIGN KEY (userID) REFERENCES users(userID),
+	FOREIGN KEY (postID) REFERENCES posts(postID)
 );
