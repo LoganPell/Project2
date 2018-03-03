@@ -1,5 +1,5 @@
 // Connection to MySql
-var connection = require('./connection.js');
+var connection = require('../db.js');
 
 // Object for all our SQL statement functions.
 // Setup CRUD for MySQL

@@ -1,24 +1,27 @@
 var express = require("express");
 var router = express.Router();
+
 var expressValidator = require('express-validator');
 
 //Hashing passwords
 var bcrypt = require('bcrypt');
 const saltRounds = 10;
-
+//sessions storage
 var passport = require('passport');
 
-
+//Home Page
 router.get('/', function(req, res) {
-	// console.log(req.user);
-	// console.log(req.isAuthenticated());
+	console.log(req.user);
+	console.log(req.isAuthenticated());
 	res.render('home', { title: 'Home' });
 });
 
-router.get('/profile', function(req, res) {
+//Profile Page, Authenticate
+router.get('/profile', authenticationMiddleware(), function(req, res) {
 	res.render('profile', { title: 'Profile', authenticate: true });
-});
+}); 
 
+//Login Page
 router.get('/login', function(req, res) {
 	res.render('login', { title: 'Login'});
 });
@@ -34,6 +37,7 @@ router.get('/logout', function(req, res) {
 	res.redirect('/');
 });
 
+//Registration Page
 router.get('/register', function(req, res, next) {
   res.render('register', { title: 'Registration' });
 });
@@ -69,12 +73,14 @@ router.post('/register', function(req, res, next) {
 			db.query('INSERT INTO users (username, email, password) VALUES (?, ?, ?)', [username, email, hash], function(error, results, fields) {
 				if (error) throw error;
 
+				//access user sessions data
 				db.query('SELECT LAST_INSERT_ID() as user_id', function(error, results, fields) {
 					if (error) throw error;
 
 					const user_id = results[0];
 
 					console.log(results[0]);
+
 					req.login(user_id, function(err) {
 						res.redirect('/');
 					});
@@ -96,60 +102,14 @@ passport.deserializeUser(function(user_id, done) {
 // -------------------------------------------------------------------------------------------------
 
 
-//Our Models
-// var db = require("../models/author.js");
+//Stores session data only if users logged in
+function authenticationMiddleware () {  
+	return (req, res, next) => {
+		console.log('req.session.passport.users: ${JSON.stringify(req.session.passport)}');
 
-// // Find all Authors and return them to the user with res.json
-// router.get("/authors", function(req, res) {
-// 	db.Author.findAll({}).then(function(dbAuthor) {
-// 		res.json(dbAuthor);
-// 	});
-// });
-
-// router.get("/authors/:id", function(req, res) {
-// 	 // Find one Author with the id in req.params.id and return them to the user with res.json
-// 	db.Author.findOne({
-// 		where: {
-// 			id: req.params.id
-// 		}
-// 	}).then(function(dbAuthor) {
-// 		res.json(dbAuthor);
-// 	});
-// });
-
-// router.post("/authors", function(req, res) {
-// 	 // Create an Author with the data available to us in req.body
-// 	console.log(req.body);
-// 	db.Author.create(req.body).then(function(dbAuthor) {
-// 		res.json(dbAuthor);
-// 	});
-// });
-
-// router.delete("/authors/:id", function(req, res) {
-// 	// Delete the Author with the id available to us in req.params.id
-// 	db.Author.destroy({
-// 		where: {
-// 			id: req.params.id
-// 		}
-// 	}).then(function(dbAuthor) {
-// 		res.json(dbAuthor);
-// 	});
-// });
-// // --------------------------------------------------------------------------------------------------
-// // --------------------------------------------------------------------------------------------------
-
-
-// function authenticationMiddleware () {  
-// 	return (req, res, next) => {
-// 		console.log('req.session.passport.users: ${JSON.stringify(req.session.passport)}');
-
-// 	    if (req.isAuthenticated()) return next();
-// 	    res.redirect('/profile');
-// 	}
-// }
+	    if (req.isAuthenticated()) return next();
+	    res.redirect('/profile');
+	}
+}
 
 module.exports = router;
-// PORT = 3000;
-// app.listen(PORT, function() {
-// 	console.log("app listening on PORT: " + PORT);
-// });
