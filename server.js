@@ -20,7 +20,6 @@ var app = express(); //
 require('dotenv').config();
 app.use(express.static('public'));
 
-
 // view engine setup
 app.engine('handlebars', exphbs({ defaultLayout: "index"}));
 app.set('view engine', 'handlebars');
@@ -28,6 +27,8 @@ app.set('view engine', 'handlebars');
 
 var index = require('./routes/index.js');
 var users = require('./routes/users.js');
+var posts = require('./models/post.js');
+var blogger = require('./models/blogger.js');
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));

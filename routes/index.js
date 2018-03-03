@@ -39,6 +39,7 @@ router.get('/logout', function(req, res) {
 
 //Registration Page
 router.get('/register', function(req, res, next) {
+	console.log(req.status);
   res.render('register', { title: 'Registration' });
 });
 
@@ -74,17 +75,13 @@ router.post('/register', function(req, res, next) {
 				if (error) {
 					switch(error.code){
 						case "ER_DUP_ENTRY":
-						res.redirect('/login');
+						res.json({error: "Username is taken"});
+
 						break;
 					}
 					return;
 				};
 					
-// gotta figure out duplicate username/email trying to register,
-//redirect to login page
-// App crashes
-//refer to schema line 11
-
 				//access user sessions data
 				db.query('SELECT LAST_INSERT_ID() as user_id', function(error, results, fields) {
 					if (error) throw error;
