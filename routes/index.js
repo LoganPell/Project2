@@ -1,12 +1,12 @@
-
 var express = require("express");
 var router = express.Router();
 
+var expressValidator = require('express-validator');
 
 //Hashing passwords
 var bcrypt = require('bcrypt');
 const saltRounds = 10;
-
+//sessions storage
 var passport = require('passport');
 
 router.post('/postform', function(req, res) {
@@ -41,15 +41,17 @@ router.get('/post/?', function(req,res) {
 });
 
 router.get('/', function(req, res) {
-	// console.log(req.user);
-	// console.log(req.isAuthenticated());
+	console.log(req.user);
+	console.log(req.isAuthenticated());
 	res.render('home', { title: 'Home' });
 });
+
 
 router.get('/profile', function(req, res) {
 	res.render('profile', { title: 'Profile', authenticate: true });
 });
 
+//Login Page
 router.get('/login', function(req, res) {
 	res.render('login', { title: 'Login'});
 });
@@ -66,7 +68,9 @@ router.get('/logout', function(req, res) {
 	res.redirect('/');
 });
 
+//Registration Page
 router.get('/register', function(req, res, next) {
+	console.log(req.status);
   res.render('register', { title: 'Registration' });
 });
 
@@ -84,7 +88,7 @@ router.post('/register', function(req, res, next) {
 	const errors = req.validationErrors();
 
 	if (errors) {
-		console.log('errors: ${JSON.stringify(errors)}');
+		console.log('Line 59 errors: ${JSON.stringify(errors)}');
 
 		res.render('/register', {
 			title: 'Registration Error',
@@ -98,15 +102,20 @@ router.post('/register', function(req, res, next) {
 		const db = require("../db.js");
 
 		bcrypt.hash(password, saltRounds, function(err, hash) {
-			db.query('INSERT INTO users (username, email, password) VALUES(?, ?, ?)', [username, email, hash], function(error, results, fields) {
-				if (error) {
-					switch (error.code) {
-						case "ER_DUP_ENTRY":
-						res.redirect('/register');
-						break;
-					}
-				return; 
-				}
+
+			db.query('INSERT INTO users (username, email, password) VALUES (?, ?, ?)', [username, email, hash], function(error, results, fields) {
+				// if (error) {
+				// 	switch(error.code){
+				// 		case "ER_DUP_ENTRY":
+				// 		res.json({error: "Username is taken"});
+
+				// 		break;
+				// 	}
+				// 	return;
+				// };
+				});
+					
+				//access user sessions data
 
 				db.query('SELECT LAST_INSERT_ID() as user_id', function(error, results, fields) {
 					if (error) throw error;
@@ -114,11 +123,12 @@ router.post('/register', function(req, res, next) {
 					const user_id = results[0];
 
 					console.log(results[0]);
+
 					req.login(user_id, function(err) {
 						res.redirect('/');
 					});
 				});
-			});
+			
 		});
 	}
 }); 
@@ -133,4 +143,5 @@ passport.deserializeUser(function(user_id, done) {
 
 
 module.exports = router;
+
 
