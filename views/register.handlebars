@@ -12,7 +12,9 @@
     	<div class="col s8 m10 l10 offset-s2 offset-m2 offset-l2">
       		<h2>Register</h2>
       		<p>It's free, and we will never send you emails... ever. Pinky swear.</p>
-			<form method="POST" action="/register">
+
+			<form>
+			
 				<div class="row">
 		        <div class="input-field col s12 m8 l8">
 		          <input name="username" type="text" class="validate" placeholder="Username" id="regUserName">
@@ -37,7 +39,9 @@
 		          <label for="regPasswordConfirm">Confirm Password</label>
 		        </div>
 		      </div>
+
 		      <button class="btn waves-effect waves-light blue-grey darken-2" type="submit" name="action">Submit
+
 		        <i class="material-icons right">send</i>
 		      </button>
 			</form>
@@ -45,3 +49,23 @@
 	</div>
 
 {{> footer-end }}
+
+<script>
+	$("#formSubmit").on("click", function (event) {
+		event.preventDefault();
+		//code to capture form input data
+		var data = {};
+
+		$.ajax({
+			method: "POST", 
+			url: "/register"
+			data: data
+			console.log(data);
+		}).then(function (response){
+			if(response.error) {
+				alert(response.error);
+			}
+		})
+	});
+
+</script>

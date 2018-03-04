@@ -8,19 +8,17 @@ var expressValidator = require('express-validator');
 var exphbs = require('express-handlebars');
 
 // Authentication Packages
-var session = require('express-session');
-var passport = require('passport');
+var session = require('express-session'); //cookie session 
+var passport = require('passport'); //passport authentication
 var LocalStrategy = require('passport-local').Strategy;
 var MySQLStore = require('express-mysql-session')(session);
-var bcrypt = require('bcrypt');
+var bcrypt = require('bcrypt'); //Hash password
 
 var port = process.env.PORT || 3000;
 var app = express(); // 
 
 require('dotenv').config();
 app.use(express.static('public'));
-
-
 
 // view engine setup
 app.engine('handlebars', exphbs({ defaultLayout: "index"}));
@@ -29,6 +27,8 @@ app.set('view engine', 'handlebars');
 
 var index = require('./routes/index.js');
 var users = require('./routes/users.js');
+var posts = require('./models/post.js');
+var blogger = require('./models/blogger.js');
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
@@ -44,7 +44,6 @@ var options = {
   user: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME,
-  socketPath: '/Applications/MAMP/tmp/mysql/mysql.sock'
 };
 
 var sessionStore = new MySQLStore(options);
@@ -56,6 +55,7 @@ app.use(session({
   saveUninitialized: false,
   // cookie: { secure: true }
 }));
+
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -73,7 +73,7 @@ passport.use(new LocalStrategy(
     console.log(password);
     const db = require('./db');
 
-    db.query('SELECT id, password FROM users WHERE username = ?', [username], function(err, results, fields) {
+    db.query('SELECT password FROM users WHERE username = ?', [username], function(err, results, fields) {
       if (err) {done(err)};
 
       if (results.length === 0) {
