@@ -15,25 +15,26 @@ CREATE TABLE users(
 CREATE TABLE posts(
     postID INT NOT NULL AUTO_INCREMENT,
     userID INT NOT NULL,
-    TIMESTAMP,
-    postTitle VARCHAR(100) NOT NULL,
-    category VARCHAR(100) NOT NULL,
-    post VARCHAR(1000) NOT NULL,
+    postTitle VARCHAR(255) NOT NULL,
+    category VARCHAR(255) NOT NULL,
+    postBody TEXT(1000),
+    link TEXT(1000),
     upvotes INT NULL,
     downvotes INT NULL,
     PRIMARY KEY (postID),
     FOREIGN KEY (userID) REFERENCES users(userID),
+    ts TIMESTAMP
 );
 
 CREATE TABLE comments(
     commentID INT NOT NULL AUTO_INCREMENT,
     userID INT NOT NULL,
     postID INT NOT NULL,
-    TIMESTAMP,
     comment VARCHAR(1000) NOT NULL,
     upvotes INT NULL,
     downvotes INT NULL,
     PRIMARY KEY (commentID),
     FOREIGN KEY (userID) REFERENCES users(userID),
-    FOREIGN KEY (postID) REFERENCES posts(postID)
+    FOREIGN KEY (postID) REFERENCES posts(postID),
+    ts TIMESTAMP
 );
