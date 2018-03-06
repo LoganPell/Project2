@@ -13,30 +13,30 @@ CREATE TABLE users(
 );
 
 CREATE TABLE posts(
-    postID INT NOT NULL AUTO_INCREMENT,
-    userID INT NOT NULL,
-    postBody TEXT(1000),
-    link TEXT(1000) NOT NULL,
-    postTitle VARCHAR(100) NOT NULL,
-    category VARCHAR(100) NOT NULL,
-    upvotes INT NULL,
-    downvotes INT NULL,
-    PRIMARY KEY (postID),
-    FOREIGN KEY (userID) REFERENCES users(userID),
-    ts TIMESTAMP
+	postID INT NOT NULL AUTO_INCREMENT,
+	userID INT NOT NULL,
+	postTitle VARCHAR(100) NOT NULL,
+	category VARCHAR(100) NOT NULL,
+	post VARCHAR(1000) NOT NULL,
+	upvotes INT NULL,
+	downvotes INT NULL,
+	PRIMARY KEY (postID),
+	FOREIGN KEY (userID) REFERENCES users(userID),
+	FOREIGN KEY (username) REFERENCES users(username),
+	ts TIMESTAMP
 );
 
 CREATE TABLE comments(
-    commentID INT NOT NULL AUTO_INCREMENT,
-    userID INT NOT NULL,
-    postID INT NOT NULL,
-    comment VARCHAR(1000) NOT NULL,
-    upvotes INT NULL,
-    downvotes INT NULL,
-    PRIMARY KEY (commentID),
-    FOREIGN KEY (userID) REFERENCES users(userID),
-    FOREIGN KEY (postID) REFERENCES posts(postID),
-    ts TIMESTAMP
+	commentID INT NOT NULL AUTO_INCREMENT,
+	userID INT NOT NULL,
+	postID INT NOT NULL,
+	comment VARCHAR(1000) NOT NULL,
+	upvotes INT NULL,
+	downvotes INT NULL,
+	PRIMARY KEY (commentID),
+	FOREIGN KEY (userID) REFERENCES users(userID),
+	FOREIGN KEY (postID) REFERENCES posts(postID),
+	ts TIMESTAMP
 );
 
 
