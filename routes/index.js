@@ -29,9 +29,11 @@ var passport = require('passport');
 
 // 		db.query('INSERT INTO posts (postTitle, postBody) VALUES (?, ?)', [postTitle, postBody], function(error, results, fields) {
 
+
 // 		db.query('INSERT INTO posts (postTitle, postBody) VALUES (?, ?)', [postTitle, postBody] function(error, results, fields) {
 
 // 			if (error) throw error;
+
 // 		});
 // 	}
 // });
@@ -47,7 +49,7 @@ router.get('/post/:id', function(req,res) {
 });
 
 router.get('/', function(req, res) {
-	// console.log(req.user);
+	console.log(req.user);
 	// console.log(req.isAuthenticated());
 	const db = require("../db.js");
 	db.query("SELECT * FROM posts",function(error, results, fields){
