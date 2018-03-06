@@ -9,14 +9,14 @@ const saltRounds = 10;
 //sessions storage
 var passport = require('passport');
 
-router.post('/postform', function(req, res) {
+router.post('/post', function(req, res) {
 	console.log(req.body);
 	req.checkBody('postTitle').notEmpty();
 	req.checkBody('postForm').notEmpty();
 
 	const errors = req.validationErrors();
 	if (errors) {
-		res.render('postform', 
+		res.render('post', 
 			{ title: 'Post Error', 
 			errors: errors
 		});
@@ -104,15 +104,15 @@ router.post('/register', function(req, res, next) {
 		bcrypt.hash(password, saltRounds, function(err, hash) {
 
 			db.query('INSERT INTO users (username, email, password) VALUES (?, ?, ?)', [username, email, hash], function(error, results, fields) {
-				// if (error) {
-				// 	switch(error.code){
-				// 		case "ER_DUP_ENTRY":
-				// 		res.json({error: "Username is taken"});
+				if (error) {
+					switch(error.code){
+						case "ER_DUP_ENTRY":
+						res.redirect("/login");
 
-				// 		break;
-				// 	}
-				// 	return;
-				// };
+						break;
+					}
+					return;
+				};
 				});
 					
 				//access user sessions data
@@ -143,5 +143,3 @@ passport.deserializeUser(function(user_id, done) {
 
 
 module.exports = router;
-
-
