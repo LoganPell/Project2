@@ -1,5 +1,51 @@
   {{> header }}
   <body>
+    {{#each post}}
+    <div class="row">
+    <div class="col s10 m10 offset-s1 offset-m1">
+      <div class="postcards card z-depth-0">
+        <div class="card-content">
+          <p class="right red-text accent-2">{{this.category}}</p>
+          <p>{{this.username}}</p>
+          <p class="card-title">{{this.postTitle}}</p>
+          <div class="card-action">
+            <p class="postBody">{{this.postBody}}</p>
+          </div>
+          <div class="card-action">
+            <ul class="hide-on-small-and-down">
+              <li class="right">
+                <a href="#" class="red-text accent-2"><i class="left material-icons">arrow_drop_up</i>{{this.upvotes}}</a>
+              </li>
+              <li class="right">
+                <a href="#" class="red-text accent-2"><i class=" left material-icons">arrow_drop_down</i>{{this.downvotes}}</a>
+              </li>
+            </ul>
+            <div class="right hide-on-med-and-up">
+              <a class="red-text accent-2 dropdown-trigger btn-flat" href="#" data-target='dropdown1'><i class="material-icons">more_horiz</i></a>
+              <ul id='dropdown1' class='dropdown-content'>
+                <li>
+                  <a href="#!" class="red-text accent-2"><i class="material-icons">arrow_drop_up</i>{{this.upvotes}}</a>
+                </li>
+                <li>
+                  <a href="#!" class="red-text accent-2"><i class="material-icons">arrow_drop_down</i>{{this.downvotes}}</a>
+                </li>
+              </ul>
+            </div>
+            <div class="commentForm row">
+              <div class="col s10 m10 offset-s1 offset-m2">
+                <p>Leave a comment</p>
+                <form>
+                  <textarea id="postComment" name="replyBody" class="reply materialize-textarea"></textarea>
+                  <label for="postComment"></label>
+                </form>
+                <a class="right blue-grey-text darken-2"><i class="material-icons">reply</i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
     <div class="commentsContainer row">
       <div class="col s10 m10 offset-s1 offset-m1">
@@ -18,8 +64,8 @@
             <div class="card-action">
               <div class="commentDiv row">
                 <div class="col s12 m12">
-                  <p class="red-text accent-2">Username</p>
-                  <p>dapibus ac facilisis in, egestas eget quam. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Cras justo odio, dapibus ac facilisis in, egestas eget quam.</p>
+                  <p class="red-text accent-2"></p>
+                  <p>{{this.comment}}</p>
                   <div class="card-action">
                     <ul class="hide-on-small-and-down">
                       <li class="right">
@@ -46,6 +92,8 @@
           </div>
         </div>
       </div>
+      {{/each}}
     </div>
+
 
   </body>

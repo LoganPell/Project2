@@ -15,10 +15,8 @@ CREATE TABLE users(
 CREATE TABLE posts(
     postID INT NOT NULL AUTO_INCREMENT,
     userID INT NOT NULL,
-    postTitle VARCHAR(255) NOT NULL,
-    category VARCHAR(255) NOT NULL,
     postBody TEXT(1000),
-    link TEXT(1000),
+    link TEXT(1000) NOT NULL,
     postTitle VARCHAR(100) NOT NULL,
     category VARCHAR(100) NOT NULL,
     upvotes INT NULL,
@@ -40,4 +38,7 @@ CREATE TABLE comments(
     FOREIGN KEY (postID) REFERENCES posts(postID),
     ts TIMESTAMP
 );
+
+
+
 
