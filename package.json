@@ -10,7 +10,7 @@
     "body-parser": "^1.15.2",
     "cookie-parser": "~1.4.3",
     "debug": "~2.2.0",
-    "express": "~4.14.0",
+    "express": "^4.14.1",
     "express-handlebars": "^3.0.0",
     "express-mysql-session": "^1.2.3",
     "express-session": "^1.15.6",
@@ -18,7 +18,7 @@
     "handlebars": "^4.0.11",
     "hbs": "~4.0.1",
     "morgan": "~1.7.0",
-    "mysql": "^2.13.0",
+    "mysql": "^2.15.0",
     "nodemon": "^1.15.1",
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
@@ -42,7 +42,7 @@
     "webpack-dotenv-plugin": "^2.0.0"
   },
   "description": "Starter code to create a forum-like website. User login and authentication complete.",
-  "main": "app.js",
+  "main": "server.js",
   "directories": {
     "test": "tests"
   },
