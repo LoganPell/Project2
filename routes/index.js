@@ -32,18 +32,27 @@ router.post('/post', function(req, res) {
 	}
 });
 
-router.get('/post/?', function(req,res) {
+router.get('/post/:id', function(req,res) {
 	const db = require('../db.js');
-	db.query('SELECT (postTitle, postBody, upvotes, downvotes) FROM posts WHERE postID = ?', [req.params.postID], function(req, res) {
-		res.render('post', { title: 'Post' });
+	console.log("/post/ "+req.params.id)
+	db.query('SELECT * FROM posts JOIN comments ON posts.postID = comments.postID WHERE posts.postID=?', [req.params.id], function(error, results) {
+		console.log(results);
+		res.render('post', { title: 'Post', post:results });
 	});
 	// res.redirect to post
 });
 
 router.get('/', function(req, res) {
-	console.log(req.user);
+	// console.log(req.user);
 	console.log(req.isAuthenticated());
-	res.render('home', { title: 'Home' });
+	const db = require("../db.js");
+	db.query("SELECT * FROM posts",function(error, results, fields){
+		console.log(results)
+		res.render('home', { title: 'Home', posts: results});
+	})
+	// console.log(req.user);
+	// console.log(req.isAuthenticated());
+	// res.render('home', { title: 'Home' });
 });
 
 
