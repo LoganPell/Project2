@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 // var ormPost = require('../config/orm.js');
 
 // var posts = {
