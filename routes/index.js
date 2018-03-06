@@ -9,28 +9,28 @@ const saltRounds = 10;
 
 var passport = require('passport');
 
-router.post('/postform', function(req, res) {
-	console.log(req.body);
-	req.checkBody('postTitle').notEmpty();
-	req.checkBody('postForm').notEmpty();
+// router.post('/postform', function(req, res) {
+// 	console.log(req.body);
+// 	req.checkBody('postTitle').notEmpty();
+// 	req.checkBody('postForm').notEmpty();
 
-	const errors = req.validationErrors();
-	if (errors) {
-		res.render('postform', 
-			{ title: 'Post Error', 
-			errors: errors
-		});
-	} else {
-		const postTitle = req.body.postTitle;
-		const postBody = req.body.postBody;
+// 	const errors = req.validationErrors();
+// 	if (errors) {
+// 		res.render('postform', 
+// 			{ title: 'Post Error', 
+// 			errors: errors
+// 		});
+// 	} else {
+// 		const postTitle = req.body.postTitle;
+// 		const postBody = req.body.postBody;
 
-		const db = require('../db.js');
+// 		const db = require('../db.js');
 
-		db.query('INSERT INTO posts (postTitle, postBody) VALUES (?, ?)', [postTitle, postBody], function(error, results, fields) {
-			if (error) throw error;
-		});
-	}
-});
+// 		db.query('INSERT INTO posts (postTitle, postBody) VALUES (?, ?)', [postTitle, postBody] function(error, results, fields) {
+// 			if (error) throw error;
+// 		});
+// 	}
+// });
 
 router.get('/post/?', function(req,res) {
 	const db = require('../db.js');
@@ -55,7 +55,7 @@ router.get('/login', function(req, res) {
 });
 
 router.post('/login', passport.authenticate('local', {
-	successRedirect: '/', authenticate: true,
+	successRedirect: '/',
 	failureRedirect: '/login'
 	})
 );
@@ -99,14 +99,8 @@ router.post('/register', function(req, res, next) {
 
 		bcrypt.hash(password, saltRounds, function(err, hash) {
 			db.query('INSERT INTO users (username, email, password) VALUES(?, ?, ?)', [username, email, hash], function(error, results, fields) {
-				if (error) {
-					switch (error.code) {
-						case "ER_DUP_ENTRY":
-						res.redirect('/register');
-						break;
-					}
-				return; 
-				}
+				if (error) throw error;
+				// res.redirect('/register');
 
 				db.query('SELECT LAST_INSERT_ID() as user_id', function(error, results, fields) {
 					if (error) throw error;

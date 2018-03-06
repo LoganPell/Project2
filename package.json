@@ -42,7 +42,7 @@
     "webpack-dotenv-plugin": "^2.0.0"
   },
   "description": "Starter code to create a forum-like website. User login and authentication complete.",
-  "main": "app.js",
+  "main": "server.js",
   "directories": {
     "test": "tests"
   },
