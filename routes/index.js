@@ -6,6 +6,7 @@ var router = express.Router();
 var bcrypt = require('bcrypt');
 const saltRounds = 10;
 
+
 var passport = require('passport');
 
 // router.post('/postform', function(req, res) {
@@ -25,21 +26,17 @@ var passport = require('passport');
 
 // 		const db = require('../db.js');
 
-<<<<<<< HEAD
+
 // 		db.query('INSERT INTO posts (postTitle, postBody) VALUES (?, ?)', [postTitle, postBody], function(error, results, fields) {
-=======
+
 // 		db.query('INSERT INTO posts (postTitle, postBody) VALUES (?, ?)', [postTitle, postBody] function(error, results, fields) {
->>>>>>> Logan
+
 // 			if (error) throw error;
 // 		});
 // 	}
 // });
 
-<<<<<<< HEAD
 router.get('/post/:id', function(req,res) {
-=======
-router.get('/post/?', function(req,res) {
->>>>>>> Logan
 	const db = require('../db.js');
 	console.log("/post/ "+req.params.id)
 	db.query('SELECT * FROM posts JOIN comments ON posts.postID = comments.postID WHERE posts.postID=?', [req.params.id], function(error, results) {
@@ -129,7 +126,6 @@ router.post('/register', function(req, res, next) {
 			});
 		});
 	}
->>>>>>> Logan
 }); 
 
 passport.serializeUser(function(user_id, done) {
