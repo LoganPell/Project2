@@ -53,6 +53,7 @@
       </li>
     </ul> -->
 
+  {{#if isAuthenticated}}
   <div class="fixed-action-btn">
     <a class="right btn-floating btn-large waves-effect waves-light blue-grey darken-2 modal-trigger" href="#postModal"><i class="material-icons">add</i></a>
   </div>
@@ -80,8 +81,8 @@
     <div class="modal-footer">
       <a href="#!" class="modal-action modal-close waves-effect waves-green btn">Post</a>
     </div>
-
   </div>
+  {{/if}}
   
 
  
