@@ -5,31 +5,6 @@
       <meta http-equiv="x-ua-compatible" content="ie=edge">
       <title>{{ title }}</title>
       <meta name="description" content="">
-      
-
-      <link rel="apple-touch-icon" href="apple-touch-icon.png">
-      <!-- JQUERY -->
-      <script src="http://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
-
-      <!-- MATERIAL ICONS -->
-      <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-
-      
-      <!-- MATERIALIZE -->
-      <!-- CSS -->
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-alpha.4/css/materialize.min.css">
-      <!-- JAVASCRIPT -->
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-alpha.4/js/materialize.min.js"></script>
-
-      <!-- OUR CSS -->
-      <link rel="stylesheet" type="text/css" href="/css/style.css">
-
-      <!-- OUR JAVASCRIPT -->
-      <script type="text/javascript" src="/js/client.js"></script>
-
-      <!-- SCALE SCALE SCALE -->
-      <meta name="viewport" content="width=device-width, initial-scale=1">
-             
   </head>
   <body>
     <div class="navbar-fixed">
@@ -42,8 +17,7 @@
           <li>
             <a href="/"><i class="left material-icons">home</i>Home</a>
           </li>
-          {{#if authenticate}}
-          <!-- IF LOGGED IN -->
+          {{#if isAuthenticated}}
           <li>
             <a  class="white-text dropdown-trigger" data-target="favsDrop"><i class="left material-icons">account_box</i>Username</a>
             <ul id="favsDrop" class='dropdown-content'>
@@ -61,57 +35,20 @@
               </li>
             </ul>
           </li>
-
           <li>
             <a href="/logout" class="white-text">Logout</a>
           </li>
           {{else}}
-          <!-- IF NOT LOGGED IN -->
           <li>
             <a href="/login"><i class="left material-icons">account_box</i>Login</a>
           </li>
           <li>
             <a href="/register"><i class="left material-icons">create</i>Sign Up</a>
           </li>
+          {{/if}}
         </ul>
-        {{/if}}
+
       </div>
     </nav>
-  </div>
-
-  <ul class="sidenav z-depth-0 blue-grey darken-2" id="mobile-demo">
-    <li id="sidenav-logo">
-      <img src="/images/frontPage.svg">
-    </li>
-    <li>
-      <a href="/" class="white-text"><i class="left material-icons white-text">home</i>Home</a>
-    </li>
-    {{#if authenticate}}
-    <!-- IF LOGGED IN -->
-    <li>
-      <a href="/profile" class="white-text"><i class="left material-icons white-text">account_box</i>Username</a>
-    </li>
-    <li>
-      <a href="/logout" class="white-text">Logout</a>
-    </li>
-    <li>
-      <a href="#" class="white-text">Category A</a>
-    </li>
-    <li>
-      <a href="#" class="white-text">Category B</a>
-    </li>
-    <li>
-      <a href="#" class="white-text">Category C</a>
-    </li>
-    {{else}}
-    <!-- IF NOT LOGGED IN -->
-    <li>
-      <a href="/login" class="white-text"><i class="left material-icons white-text">account_box</i>Login</a>
-    </li>
-    <li>
-      <a href="/register" class="white-text"><i class="left material-icons white-text">create</i>Sign Up</a>
-    </li>
-    {{/if}}
-
-  </ul>
-
+    </div>
+  </body>
