@@ -61,25 +61,19 @@
   <div id="postModal" class="modal">
     <div class="modal-content">
       <h4>Make a Post</h4>
-      <form>
+      <form method="POST" action="post">
         <input type="text" id="postModalTitle" name="makePostTitle">
         <label class="active" for="postModalTitle">Post Title</label>
         <textarea id="postModalBody" class="materialize-textarea"></textarea>
         <label for="postModalBody">Type your post.</label>
-        <input id="postModalLink" class="materialize-textarea"></input>
-        <label for="postModalLink">Submit a link</label>
-        <input class='dropdown-trigger btn' data-target='postCatDrop'></input>
-        <label>Category</label>
-        <ul id='postCatDrop' class='dropdown-content'>
-          <li><a href="#!">Category A</a></li>
-          <li><a href="#!">Category B</a></li>
-          <li><a href="#!">Category C</a></li>
-          <li><a href="#!">Category D</a></li>
-        </ul>
+        <input type="text" id="postModalLink"></input>
+        <label for="postModalLink">Link a photo or video</label>
+        <input type="text" id="postModalCategory"></input>
+        <label for="postModalCategory">Category</label>
       </form>
     </div>
     <div class="modal-footer">
-      <a href="#!" class="modal-action modal-close waves-effect waves-green btn">Post</a>
+      <a id="post-submit" class="modal-action modal-close blue-grey darken-2 waves-effect waves-light btn">Post</a>
     </div>
   </div>
   {{/if}}
