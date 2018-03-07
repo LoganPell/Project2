@@ -35,9 +35,9 @@ router.post('/post', function(req, res) {
 router.get('/post/:id', function(req,res) {
 	const db = require('../db.js');
 	console.log("/post/ "+req.params.id)
-	db.query('SELECT * FROM posts JOIN comments ON posts.postID = comments.postID WHERE posts.postID=?', [req.params.id], function(error, results) {
+	db.query('SELECT * FROM posts WHERE postID=?', [req.params.id], function(error, results) {
 		console.log(results);
-		res.render('post', { title: 'Post', post:results });
+		res.render('post', { title: 'Post', post: results });
 	});
 	// res.redirect to post
 });
@@ -49,7 +49,7 @@ router.get('/', function(req, res) {
 	db.query("SELECT * FROM posts",function(error, results, fields){
 		console.log(results)
 		res.render('home', { title: 'Home', posts: results});
-	})
+	});
 	// console.log(req.user);
 	// console.log(req.isAuthenticated());
 	// res.render('home', { title: 'Home' });
