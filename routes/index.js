@@ -45,15 +45,34 @@ router.post('/post', authenticatMiddleware(), function(req, res) {
 router.get('/post/:id', function(req,res) {
 	const db = require('../db.js');
 	console.log("/post/ "+req.params.id)
-	db.query('SELECT * FROM posts JOIN comments ON posts.postID = comments.postID WHERE posts.postID=?', [req.params.id], function(error, results) {
+	db.query('SELECT * FROM posts WHERE postID=?', [req.params.id], function(error, results) {
 		console.log(results);
-		res.render('post', { title: 'Post', post:results });
+		res.render('post', { title: 'Post', post: results });
 	});
 	// res.redirect to post
 });  
 
+<<<<<<< HEAD
 router.get('/profile', authenticatMiddleware(), function(req, res) {
 	res.render('profile', { title: 'Profile' });
+=======
+router.get('/', function(req, res) {
+	// console.log(req.user);
+	console.log(req.isAuthenticated());
+	const db = require("../db.js");
+	db.query("SELECT * FROM posts",function(error, results, fields){
+		console.log(results)
+		res.render('home', { title: 'Home', posts: results});
+	});
+	// console.log(req.user);
+	// console.log(req.isAuthenticated());
+	// res.render('home', { title: 'Home' });
+});
+
+
+router.get('/profile', function(req, res) {
+	res.render('profile', { title: 'Profile', authenticate: true });
+>>>>>>> 589ee87799788f72ab3043f7a8e6f497434cdcd2
 });
 
 //Login Page
