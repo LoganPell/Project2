@@ -9,8 +9,9 @@
             <p>{{this.username}}</p>
             <p class="card-title">{{this.postTitle}}</p>
             <div class="card-action">
-              <object class="materialboxed" data="{{this.link}}"
-   width="560" height="315"></object>
+             {{#if link}} 
+              <object class="materialboxed" data="{{this.link}}" width="560" height="315"></object>
+              {{/if}}
               <p class="postBody">{{this.postBody}}</p>
             </div>
             <div class="card-action">
