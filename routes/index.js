@@ -52,10 +52,11 @@ router.get('/post/:id', function(req,res) {
 	// res.redirect to post
 });  
 
-<<<<<<< HEAD
+
 router.get('/profile', authenticatMiddleware(), function(req, res) {
 	res.render('profile', { title: 'Profile' });
-=======
+});
+
 router.get('/', function(req, res) {
 	// console.log(req.user);
 	console.log(req.isAuthenticated());
@@ -67,12 +68,6 @@ router.get('/', function(req, res) {
 	// console.log(req.user);
 	// console.log(req.isAuthenticated());
 	// res.render('home', { title: 'Home' });
-});
-
-
-router.get('/profile', function(req, res) {
-	res.render('profile', { title: 'Profile', authenticate: true });
->>>>>>> 589ee87799788f72ab3043f7a8e6f497434cdcd2
 });
 
 //Login Page
