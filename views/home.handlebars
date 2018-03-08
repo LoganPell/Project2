@@ -1,27 +1,22 @@
 {{> header }}
 
-<div class="row">
+<div>
+  {{#each posts}}
+  <div class="row">
     <div class="col s10 m10 offset-s1 offset-m1">
       <div class="postcards card z-depth-0">
         <div class="card-content">
-          <p class="card-title">Hey Look at This Post Title</p>
-
-          <div class="card-action">
-            {{!-- <p class="red-text accent-2">Category</p>
-            <p class="truncate">Cras justo odio, dapibus ac facilisis in, egestas eget quam. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p> --}}
-          </div>
-
-          <p class="red-text accent-2">Category</p>
-
+          <p class="right red-text accent-2">{{this.category}}</p>
+          <a href="/post/{{this.postID}}" class="blue-grey-text darken-2 card-title">{{this.postTitle}}</a>
           <div class="card-action">
             <ul class="hide-on-small-and-down">
               <li class="left">
-                <a href="#" class="red-text accent-2"><i class="left material-icons">arrow_drop_up</i>46</a>
+                <a href="#" class="red-text accent-2"><i class="left material-icons">arrow_drop_up</i>{{this.upvotes}}</a>
               </li>
-                <a href="#" class="red-text accent-2"><i class=" left material-icons">arrow_drop_down</i>3</a>
+                <a href="#" class="red-text accent-2"><i class=" left material-icons">arrow_drop_down</i>{{this.downvotes}}</a>
               </li>
               <li class="right">
-                <a href="#" class="red-text accent-2"><i class="left material-icons">list</i>100</a>
+                <a href="/post/{{this.postID}}" class="red-text accent-2"><i class="left material-icons">list</i></a>
               </li>
             </ul>
             <div class="right hide-on-med-and-up">
@@ -43,6 +38,9 @@
       </div>
     </div>
   </div>
+  {{/each}}
+</div>
+
 
 
   <!-- <a class='left dropdown-trigger btn-small btn-flat' href='#' data-target='sortPostsDrop'>sort</a>
@@ -55,6 +53,7 @@
       </li>
     </ul> -->
 
+  {{#if isAuthenticated}}
   <div class="fixed-action-btn">
     <a class="right btn-floating btn-large waves-effect waves-light blue-grey darken-2 modal-trigger" href="#postModal"><i class="material-icons">add</i></a>
   </div>
@@ -62,28 +61,22 @@
   <div id="postModal" class="modal">
     <div class="modal-content">
       <h4>Make a Post</h4>
-      <form>
+      <form method="POST" action="post">
         <input type="text" id="postModalTitle" name="makePostTitle">
         <label class="active" for="postModalTitle">Post Title</label>
         <textarea id="postModalBody" class="materialize-textarea"></textarea>
         <label for="postModalBody">Type your post.</label>
-        <input id="postModalLink" class="materialize-textarea"></input>
-        <label for="postModalLink">Submit a link</label>
-        <input class='dropdown-trigger btn' data-target='postCatDrop'></input>
-        <label>Category</label>
-        <ul id='postCatDrop' class='dropdown-content'>
-          <li><a href="#!">Category A</a></li>
-          <li><a href="#!">Category B</a></li>
-          <li><a href="#!">Category C</a></li>
-          <li><a href="#!">Category D</a></li>
-        </ul>
+        <input type="text" id="postModalLink"></input>
+        <label for="postModalLink">Link a photo or video</label>
+        <input type="text" id="postModalCategory"></input>
+        <label for="postModalCategory">Category</label>
       </form>
     </div>
     <div class="modal-footer">
-      <a href="#!" class="modal-action modal-close waves-effect waves-green btn">Post</a>
+      <a id="post-submit" class="modal-action modal-close blue-grey darken-2 waves-effect waves-light btn">Post</a>
     </div>
-
   </div>
+  {{/if}}
   
 
  
@@ -92,4 +85,3 @@
   </footer>
 
     </div> <!-- /container -->
-

@@ -1,26 +1,27 @@
 {{> header }}
-	<div class="row">
-    	<div class="col s8 m10 l10 offset-s2 offset-m2 offset-l2">
-      		<h2>Login</h2>
-      		<p>Welcome back</p>
+
+  <div class="row">
+      <div class="col s8 m10 l10 offset-s2 offset-m2 offset-l2">
+          <h2>Login</h2>
+          <p>Welcome back</p>
 
 
-			<form method="POST" action="/login">
-				<div class="row">
-        			<div class="input-field col s12 m8 l8">
-          				<input name="username" type="text" class="validate" placeholder="Username" id="regUserName">
-          				<label for="regUserName">Username</label>
-       				</div>
-      			</div>
-      			<div class="row">
-        			<div class="input-field col s12 m8 l8">
-          				<input name="password" id="loginPassword" type="password" placeholder="Password" class="validate">
-          				<label for="loginPassword">Password</label>
-        			</div>
-      			</div>
-     		 	<button id="logBtn" class="btn waves-effect waves-light blue-grey darken-2" type="submit" name="action">Login
-       		 	<i class="material-icons right">send</i>
-      			</button>
-			</form>
-		</div>
-	</div>
+      <form method="POST" action="/login">
+        <div class="row">
+              <div class="input-field col s12 m8 l8">
+                  <input name="username" type="text" class="validate" placeholder="Username" id="regUserName">
+                  <label for="regUserName">Username</label>
+              </div>
+            </div>
+            <div class="row">
+              <div class="input-field col s12 m8 l8">
+                  <input name="password" id="loginPassword" type="password" placeholder="Password" class="validate">
+                  <label for="loginPassword">Password</label>
+              </div>
+            </div>
+          <button id="logBtn" class="btn waves-effect waves-light blue-grey darken-2" type="submit" name="action">Login
+            <i class="material-icons right">send</i>
+            </button>
+      </form>
+    </div>
+  </div>

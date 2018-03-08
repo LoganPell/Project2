@@ -1,3 +1,4 @@
+es (71 sloc)  2.88 KB
 <!doctype html>
 <html class="no-js" lang="">
   <head>
@@ -5,7 +6,6 @@
       <meta http-equiv="x-ua-compatible" content="ie=edge">
       <title>{{ title }}</title>
       <meta name="description" content="">
-      
 
       <link rel="apple-touch-icon" href="apple-touch-icon.png">
       <!-- JQUERY -->
@@ -28,8 +28,9 @@
       <script type="text/javascript" src="/js/client.js"></script>
 
       <!-- SCALE SCALE SCALE -->
-      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <!-- <meta name="viewport" content="width=device-width, initial-scale=1"> -->
              
+
   </head>
   <body>
     <div class="navbar-fixed">
@@ -42,8 +43,7 @@
           <li>
             <a href="/"><i class="left material-icons">home</i>Home</a>
           </li>
-          {{#if authenticate}}
-          <!-- IF LOGGED IN -->
+          {{#if isAuthenticated}}
           <li>
             <a  class="white-text dropdown-trigger" data-target="favsDrop"><i class="left material-icons">account_box</i>Username</a>
             <ul id="favsDrop" class='dropdown-content'>
@@ -61,57 +61,19 @@
               </li>
             </ul>
           </li>
-
           <li>
             <a href="/logout" class="white-text">Logout</a>
           </li>
           {{else}}
-          <!-- IF NOT LOGGED IN -->
           <li>
             <a href="/login"><i class="left material-icons">account_box</i>Login</a>
           </li>
           <li>
             <a href="/register"><i class="left material-icons">create</i>Sign Up</a>
           </li>
+          {{/if}}
         </ul>
-        {{/if}}
+
       </div>
     </nav>
-  </div>
-
-  <ul class="sidenav z-depth-0 blue-grey darken-2" id="mobile-demo">
-    <li id="sidenav-logo">
-      <img src="/images/frontPage.svg">
-    </li>
-    <li>
-      <a href="/" class="white-text"><i class="left material-icons white-text">home</i>Home</a>
-    </li>
-    {{#if authenticate}}
-    <!-- IF LOGGED IN -->
-    <li>
-      <a href="/profile" class="white-text"><i class="left material-icons white-text">account_box</i>Username</a>
-    </li>
-    <li>
-      <a href="/logout" class="white-text">Logout</a>
-    </li>
-    <li>
-      <a href="#" class="white-text">Category A</a>
-    </li>
-    <li>
-      <a href="#" class="white-text">Category B</a>
-    </li>
-    <li>
-      <a href="#" class="white-text">Category C</a>
-    </li>
-    {{else}}
-    <!-- IF NOT LOGGED IN -->
-    <li>
-      <a href="/login" class="white-text"><i class="left material-icons white-text">account_box</i>Login</a>
-    </li>
-    <li>
-      <a href="/register" class="white-text"><i class="left material-icons white-text">create</i>Sign Up</a>
-    </li>
-    {{/if}}
-
-  </ul>
-
+    </div>

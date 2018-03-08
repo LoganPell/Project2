@@ -13,7 +13,7 @@
       		<h2>Register</h2>
       		<p>It's free, and we will never send you emails... ever. Pinky swear.</p>
 
-			<form>
+			<form method="POST" action="/register">
 			
 				<div class="row">
 		        <div class="input-field col s12 m8 l8">
@@ -40,7 +40,7 @@
 		        </div>
 		      </div>
 
-		      <button class="btn waves-effect waves-light blue-grey darken-2" type="submit" name="action">Submit
+		      <button class="btn waves-effect waves-light blue-grey darken-2" type="submit" name="action" id="formSubmit">Submit
 
 		        <i class="material-icons right">send</i>
 		      </button>
@@ -50,22 +50,3 @@
 
 {{> footer-end }}
 
-<script>
-	$("#formSubmit").on("click", function (event) {
-		event.preventDefault();
-		//code to capture form input data
-		var data = {};
-
-		$.ajax({
-			method: "POST", 
-			url: "/register"
-			data: data
-			console.log(data);
-		}).then(function (response){
-			if(response.error) {
-				alert(response.error);
-			}
-		})
-	});
-
-</script>

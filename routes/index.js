@@ -9,14 +9,24 @@ const saltRounds = 10;
 //sessions storage
 var passport = require('passport');
 
-router.post('/postform', function(req, res) {
+router.get('/', function(req, res) {
+	console.log(req.user);
+	console.log(req.isAuthenticated());
+	const db = require("../db.js");
+	db.query("SELECT * FROM posts",function(error, results, fields){
+		console.log(results);
+		res.render('home', { title: 'Home', posts: results});
+	});
+});
+
+router.post('/post', authenticatMiddleware(), function(req, res) {
 	console.log(req.body);
 	req.checkBody('postTitle').notEmpty();
 	req.checkBody('postForm').notEmpty();
 
 	const errors = req.validationErrors();
 	if (errors) {
-		res.render('postform', 
+		res.render('post', 
 			{ title: 'Post Error', 
 			errors: errors
 		});
@@ -32,23 +42,46 @@ router.post('/postform', function(req, res) {
 	}
 });
 
-router.get('/post/?', function(req,res) {
+router.get('/post/:id', function(req,res) {
 	const db = require('../db.js');
-	db.query('SELECT (postTitle, postBody, upvotes, downvotes) FROM posts WHERE postID = ?', [req.params.postID], function(req, res) {
-		res.render('post', { title: 'Post' });
+	console.log("/post/"+req.params.id);
+	var query1 = 'SELECT * FROM posts WHERE postID=?';
+	var query2 = 'SELECT * FROM comments WHERE postID=?';
+	var returnData = {};
+	db.query(query1, [req.params.id], function(error, results) {
+		db.query(query2, req.params.id, function(error, data) {
+		// returnData += results;
+		// returnData += data;
+		console.log(results);
+		console.log(data);
+		var postRender = {
+			title:"Post",
+			post:results,
+			comment:data
+		};
+		res.render('post', postRender);
+		})
+		
 	});
 	// res.redirect to post
+});  
+
+
+router.get('/profile', authenticatMiddleware(), function(req, res) {
+	res.render('profile', { title: 'Profile' });
 });
 
 router.get('/', function(req, res) {
-	console.log(req.user);
+	// console.log(req.user);
 	console.log(req.isAuthenticated());
-	res.render('home', { title: 'Home' });
-});
-
-
-router.get('/profile', function(req, res) {
-	res.render('profile', { title: 'Profile', authenticate: true });
+	const db = require("../db.js");
+	db.query("SELECT * FROM posts",function(error, results, fields){
+		console.log(results)
+		res.render('home', { title: 'Home', posts: results});
+	});
+	// console.log(req.user);
+	// console.log(req.isAuthenticated());
+	// res.render('home', { title: 'Home' });
 });
 
 //Login Page
@@ -57,7 +90,7 @@ router.get('/login', function(req, res) {
 });
 
 router.post('/login', passport.authenticate('local', {
-	successRedirect: '/', authenticate: true,
+	successRedirect: '/',
 	failureRedirect: '/login'
 	})
 );
@@ -77,20 +110,20 @@ router.get('/register', function(req, res, next) {
 router.post('/register', function(req, res, next) {
 	console.log(req.body);
 	req.checkBody('username', 'Username field cannot be empty.').notEmpty();
-	req.checkBody('username', 'Username must be between 4-15 character long.').len(4, 15);
+	req.checkBody('username', 'Username must be between 4-15 characters long.').len(4, 15);
 	req.checkBody('email', 'The email you entered is invalid, please try again.').isEmail();
 	req.checkBody('email', 'Email address must be between 4-100 characters long, please try again.').len(4, 100);
-	req.checkBody('password', 'Password must be between 8-100 characters long.').len(8,100);
-	// req.checkBody('password', 'Password must include one lowercase character, one upppercase character, a number, and a special character.').matches(/^(?=.*\d)(?=.*[a-z])(?=.*[A-D])(?=!.*)(?=.*[^a-zA-Z0-9]).{8,}$/, "i");
+	req.checkBody('password', 'Password must be between 8-100 characters long.').len(8, 100);
+	req.checkBody("password", "Password must include one lowercase character, one uppercase character, a number, and a special character.").matches(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.* )(?=.*[^a-zA-Z0-9]).{8,}$/, "i");
 	req.checkBody('passwordMatch', 'Password must be between 8-100 characters long.').len(8, 100);
-	req.checkBody('passwordMatch', 'Password do not match, please try again.').equals(req.body.password);
+	req.checkBody('passwordMatch', 'Passwords do not match, please try again.').equals(req.body.password);
 
 	const errors = req.validationErrors();
 
 	if (errors) {
 		console.log('Line 59 errors: ${JSON.stringify(errors)}');
 
-		res.render('/register', {
+		res.render('register', {
 			title: 'Registration Error',
 			errors: errors
 		});
@@ -102,18 +135,8 @@ router.post('/register', function(req, res, next) {
 		const db = require("../db.js");
 
 		bcrypt.hash(password, saltRounds, function(err, hash) {
-
 			db.query('INSERT INTO users (username, email, password) VALUES (?, ?, ?)', [username, email, hash], function(error, results, fields) {
-				// if (error) {
-				// 	switch(error.code){
-				// 		case "ER_DUP_ENTRY":
-				// 		res.json({error: "Username is taken"});
-
-				// 		break;
-				// 	}
-				// 	return;
-				// };
-				});
+				if (error) throw error;
 					
 				//access user sessions data
 
@@ -125,9 +148,11 @@ router.post('/register', function(req, res, next) {
 					console.log(results[0]);
 
 					req.login(user_id, function(err) {
+						// console.log(err);
 						res.redirect('/');
 					});
 				});
+			});
 			
 		});
 	}
@@ -139,9 +164,16 @@ passport.serializeUser(function(user_id, done) {
 
 passport.deserializeUser(function(user_id, done) {
 	done(null, user_id);
-});	
+});
 
+function authenticatMiddleware() {
+	return (req, res, next) => {
+		console.log('req.session.passport.user: $(JSON.stringify(req.session.passport)');
+
+		if (req.isAuthenticated()) return next();
+
+		res.redirect('/login');
+	}
+}
 
 module.exports = router;
-
-

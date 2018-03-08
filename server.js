@@ -19,16 +19,18 @@ var app = express(); //
 
 require('dotenv').config();
 app.use(express.static('public'));
+// app.use(express.static(path.join(__dirname, 'public')));
 
 // view engine setup
 app.engine('handlebars', exphbs({ defaultLayout: "index"}));
 app.set('view engine', 'handlebars');
+app.set('views', path.join(__dirname, 'views'));
 
 
 var index = require('./routes/index.js');
 var users = require('./routes/users.js');
-var posts = require('./models/post.js');
-var blogger = require('./models/blogger.js');
+// var posts = require('./models/post.js');
+// var blogger = require('./models/blogger.js');
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
@@ -43,7 +45,7 @@ var options = {
   host: process.env.DB_HOST,
   user: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
-  database: process.env.DB_NAME,
+  database: process.env.DB_NAME
 };
 
 var sessionStore = new MySQLStore(options);
@@ -94,6 +96,8 @@ passport.use(new LocalStrategy(
     });
   }
 ));
+
+// var postController = require('./controllers/postController.js')
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
