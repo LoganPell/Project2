@@ -19,6 +19,7 @@ CREATE TABLE posts(
     category VARCHAR(255) NOT NULL,
     postBody TEXT(1000),
     link TEXT(1000),
+    postTitle VARCHAR(100) NOT NULL,
     upvotes INT NULL,
     downvotes INT NULL,
     PRIMARY KEY (postID),

@@ -29,64 +29,6 @@ function objToSql(ob) {
   return arr.toString();
 }
 
-// var Post = {
-
-//   // View all posts
-//   all: function(cb) {
-//     var allPost = "SELECT * FROM posts";
-//     connection.query(allPost, (err, result) => {
-//       if (err) {
-//         throw err;
-//       }
-//       cb(result);
-//     });
-//   },
-
-//   create: function(vals, cb) {
-//     connection.query()
-//     var cretePost = "INSERT INTO posts (postTitle, postBody, category) VALUES (?, ?, ?)";
-//     connection.query(cretePost, [vals], (err, result) => {
-//       if (err) {
-//         throw err;
-//       }
-
-//       cb(result);
-//     });
-//   },
-//   // An example of objColVals would be {name: panther, sleepy: true}
-//   update: function(table, objColVals, post, cb) {
-//     var queryString = "UPDATE " + table;
-
-//     // x += y is shorthand for x = x + y
-//     queryString += " SET ";
-//     queryString += objToSql(objColVals);
-//     queryString += " WHERE ";
-//     queryString += post;
-
-//     console.log(queryString);
-//     connection.query(queryString, function(err, result) {
-//       if (err) {
-//         throw err;
-//       }
-
-//       cb(result);
-//     });
-//   },
-
-//   delete: function(table, post, cb) {
-//     var queryString = "DELETE FROM " + table;
-//     queryString += " WHERE ";
-//     queryString += post;
-
-//     connection.query(queryString, function(err, result) {
-//       if (err) {
-//         throw err;
-//       }
-
-//       cb(result);
-//     });
-//   }
-// };
 
 var ormBlogger = {
   all: function(tableInput, cb) {
@@ -155,4 +97,3 @@ var ormBlogger = {
 // Export the orm object for the model (blogger.js / post.js).
 // module.exports = Post;
 module.exports = ormBlogger;
-

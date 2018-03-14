@@ -6,7 +6,10 @@ es (71 sloc)  2.88 KB
       <meta http-equiv="x-ua-compatible" content="ie=edge">
       <title>{{ title }}</title>
       <meta name="description" content="">
+<<<<<<< HEAD
 
+=======
+>>>>>>> 66ff620382c2722fe26bcad22e6706ec37d07d57
       <link rel="apple-touch-icon" href="apple-touch-icon.png">
       <!-- JQUERY -->
       <script src="http://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
@@ -73,7 +76,38 @@ es (71 sloc)  2.88 KB
           </li>
           {{/if}}
         </ul>
+<<<<<<< HEAD
 
       </div>
     </nav>
     </div>
+=======
+      </div>
+    </nav>
+  </div>
+
+  <ul class="sidenav z-depth-0 blue-grey darken-2" id="mobile-demo">
+    <li id="sidenav-logo">
+      <img src="/images/frontPage.svg">
+    </li>
+    <li>
+      <a class="white-text" href="/"><i class="left white-text material-icons">home</i>Home</a>
+    </li>
+    {{#if isAuthenticated}}
+    <li>
+      <a class="white-text"><i class="left white-text material-icons">account_box</i>Profile</a>
+    </li>
+    <li>
+      <a class="white-text" href="/logout" class="white-text"><i class="left white-text material-icons">create</i>Logout</a>
+    </li>
+    {{else}}
+    <li>
+      <a class="white-text" href="/login"><i class="left white-text material-icons">account_box</i>Login</a>
+    </li>
+    <li>
+      <a class="white-text" href="/register"><i class="left white-text material-icons">create</i>Sign Up</a>
+    </li>
+    {{/if}}
+  </ul>
+  </body>
+>>>>>>> 66ff620382c2722fe26bcad22e6706ec37d07d57

@@ -8,38 +8,45 @@ var expressValidator = require('express-validator');
 var exphbs = require('express-handlebars');
 
 // Authentication Packages
-var session = require('express-session'); //cookie session 
+var session = require('express-session'); //cookie session
 var passport = require('passport'); //passport authentication
-var LocalStrategy = require('passport-local').Strategy;
 var MySQLStore = require('express-mysql-session')(session);
+var LocalStrategy = require('passport-local').Strategy;
 var bcrypt = require('bcrypt'); //Hash password
+
+var index = require('./routes/index.js');
+var users = require('./routes/users.js');
 
 var port = process.env.PORT || 3000;
 var app = express(); // 
 
 require('dotenv').config();
+
 app.use(express.static('public'));
 // app.use(express.static(path.join(__dirname, 'public')));
 
+
 // view engine setup
 app.engine('handlebars', exphbs({ defaultLayout: "index"}));
+app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'handlebars');
 app.set('views', path.join(__dirname, 'views'));
-
 
 var index = require('./routes/index.js');
 var users = require('./routes/users.js');
 // var posts = require('./models/post.js');
 // var blogger = require('./models/blogger.js');
 
+
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(expressValidator([])); //this line must be immediatle after any of the bodyParser middlewares!
 app.use(cookieParser());
-
+app.use(express.static(path.join(__dirname, 'public')));
 
 var options = {
   host: process.env.DB_HOST,
@@ -51,7 +58,7 @@ var options = {
 var sessionStore = new MySQLStore(options);
 
 app.use(session({
-  secret: 'blahblahblah',
+  secret: 'paewfklniuengd',
   resave: false,
   store: sessionStore,
   saveUninitialized: false,
@@ -145,3 +152,5 @@ hbs.registerHelper('json', function(context) {
 app.listen(port, () => {
   console.log("App is starting at port ", port)
 });
+
+module.exports = app;
